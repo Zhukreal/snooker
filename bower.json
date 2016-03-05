@@ -1,0 +1,23 @@
+{
+  "name": "Snooker",
+  "version": "0.0.1",
+  "dependencies": {
+    "bootstrap": "latest",
+    "modernizr": "~2.6.2",
+    "jquery": "latest",
+    "angular": "latest",
+    "socket.io-client": "latest",
+    "font-awesome": "latest"
+  },
+  "private": true,
+  "directory": "./public/vendor/bower_components",
+  "homepage": "https://github.com/zhukevgeniy/snooker",
+  "authors": [
+    "Zhuk Evgeniy <zhuk.evgeniy97@gmail.com>"
+  ],
+  "main": "app.js",
+  "moduleType": [
+    "node"
+  ],
+  "license": "free"
+}
