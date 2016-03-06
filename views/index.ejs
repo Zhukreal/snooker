@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="sampleApp">
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
@@ -7,13 +7,17 @@
     <script src="/vendor/bower_components/socket.io-client/socket.io.js"></script>
     <script src="/vendor/bower_components/angular/angular.js"></script>
     <script src="/vendor/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/javascripts/controllers/MainCtrl.js"></script>
+    <script src="/javascripts/appRoutes.js"></script>
+    <script src="/javascripts/app.js"></script>
   </head>
-  <body>
+  <body ng-controller="MainController">
   <header>
     <% include ./partials/header %>
   </header>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <pre>{{hello}}</pre>
   <footer>
       <% include ./partials/footer %>
   </footer>

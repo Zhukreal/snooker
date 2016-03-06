@@ -1,5 +1,5 @@
 angular.module('appRoutes',[])
-    .config([$routeProvider, $locationProvider, function($routeProvider, $locationProvider){
+    .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
         $routeProvider
             .when('/',{
                 templateURL: 'views/index.ejs',

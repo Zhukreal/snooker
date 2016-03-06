@@ -1,5 +1,5 @@
-var app = angular.model('MainCtrl',[]);
+var app = angular.module('MainCtrl',[]);
 
 app.controller('MainController', function($scope){
-    $scope.hello = "hello";
-})
+    $scope.hello = "hello,creator!";
+});
