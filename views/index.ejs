@@ -1,42 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="sampleApp">
-  <head>
+<head>
+    <!--<base href="/">-->
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
     <link rel="stylesheet" href="/vendor/bower_components/bootstrap/dist/css/bootstrap.css">
     <script src="/vendor/bower_components/socket.io-client/socket.io.js"></script>
     <script src="/vendor/bower_components/angular/angular.js"></script>
     <script src="/vendor/bower_components/angular-route/angular-route.min.js"></script>
     <script src="/javascripts/controllers/MainCtrl.js"></script>
+    <script src="/javascripts/controllers/AboutCtrl.js"></script>
+    <script src="/javascripts/controllers/GameCtrl.js"></script>
     <script src="/javascripts/appRoutes.js"></script>
     <script src="/javascripts/app.js"></script>
-  </head>
-  <body ng-controller="MainController">
-  <header>
+    <script src="/vendor/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+<body ng-controller="MainController">
+<header>
     <% include ./partials/header %>
-  </header>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <pre>{{hello}}</pre>
-  <footer>
-      <% include ./partials/footer %>
-  </footer>
-  </body>
+</header>
 
-  <script>
+<div>
+    Do u wanna <a href="#/game">Play game</a>
+</div>
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+<pre>{{hello}}</pre>
+<div ng-view></div>
+
+<footer>
+    <% include ./partials/footer %>
+</footer>
+</body>
+
+<script>
     var socket = io.connect();
     socket.on('news', function (data) {
-      console.log(data);
-      socket.emit('my other event', { my: 'data' });
+        console.log(data);
+        socket.emit('my other event', {my: 'data'});
     });
-    socket.on('count', function(data){
-      console.log(data);
-     // alert(JSON.stringify(data));
+    socket.on('count', function (data) {
+        console.log(data);
+        // alert(JSON.stringify(data));
     });
     var div = document.createElement('div');
     document.body.appendChild(div);
-//    alert(io.sockets.clients().length);
+    //    alert(io.sockets.clients().length);
 
-  </script>
-  <!--<script src="../public/javascripts/index.js"></script>-->
+</script>
+<!--<script src="../public/javascripts/index.js"></script>-->
 </html>

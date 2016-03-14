@@ -1,19 +1,25 @@
+<!--
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="sampleApp">
 <head>
-    <title><%= title %></title>
+    <title><#%= title %#></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
 <header>
-    <% include ./partials/header %>
+    <%# include ./partials/header %>
 </header>
-<div class="wrapper">
+<div class="wrapper" ng-controller="AboutController">
     <h1>About page</h1>
-    <p>Welcome to <%= title %></p>
+    <p>Welcome to <#%= title %#></p>
+    <pre>{{someAboutInfo}}</pre>
 </div>
 <footer>
-    <% include ./partials/footer %>
+    <%# include ./partials/footer %>
 </footer>
 </body>
 </html>
+-->
+<pre>
+    {{someAboutInfo}}
+</pre>

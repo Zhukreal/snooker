@@ -11,8 +11,18 @@ module.exports = function (router, passport) {
     });
 
     router.get('/', function (req, res, next) {
+        if (!req.user)
+            req.user = null;
+
+        var email;
+        if (req.user == null)
+            email = null;
+        else
+            email = req.user.local.email;
         res.render('index', {
-            title: 'Snooker'
+            title: 'Snooker',
+            userID: req.user,
+            userName: email
         });
     });
 
@@ -20,6 +30,10 @@ module.exports = function (router, passport) {
         res.render('about', {
             title: 'About page'
         });
+    });
+
+    router.get('/game', function (req, res, next) {
+        res.render('game');
     });
 
     router.get('/login', function (req, res, next) {
@@ -42,7 +56,11 @@ module.exports = function (router, passport) {
 
     router.get('/logout', function (req, res) {
         req.logout();
-       // req.session.destroy();
+        // req.session.destroy();
+        res.redirect('/');
+    });
+    router.post('/logout', function (req, res, next) {
+        req.logout();
         res.redirect('/');
     });
 
@@ -55,7 +73,7 @@ module.exports = function (router, passport) {
 
     router.post('/signup',
         passport.authenticate('local-signup', {
-                successRedirect: '/profile', // redirect to the secure profile section
+                successRedirect: '/', // redirect to the secure profile section
                 failureRedirect: '/signup', // redirect back to the signup page if there is an error
                 failureFlash: true // allow flash messages
             }
@@ -63,19 +81,19 @@ module.exports = function (router, passport) {
 
     router.post('/login',
         passport.authenticate('local-login', {
-                successRedirect: '/profile', // redirect to the secure profile section
+                successRedirect: '/', // redirect to the secure profile section // profile
                 failureRedirect: '/login', // redirect back to the signup page if there is an error
                 failureFlash: true // allow flash messages
             }
         ));
 
-    router.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+    router.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
     // the callback after google has authenticated the user
     router.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect : '/profile',
-            failureRedirect : '/'
+            successRedirect: '/profile',
+            failureRedirect: '/'
         }));
 
     router.get('/auth/twitter', passport.authenticate('twitter'));
@@ -83,11 +101,11 @@ module.exports = function (router, passport) {
     // handle the callback after twitter has authenticated the user
     router.get('/auth/twitter/callback',
         passport.authenticate('twitter', {
-            successRedirect : '/profile',
-            failureRedirect : '/'
+            successRedirect: '/profile',
+            failureRedirect: '/'
         }));
 
-    router.get('/chat', function(req,res){
+    router.get('/chat', function (req, res) {
         res.render('chat');
     })
 };
