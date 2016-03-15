@@ -65,10 +65,14 @@ app.use(session({
  res.send('visit ' + req.session.numberOfVisits);
  })*/
 
+
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 //app.use('/', routes);
+//app.use(require('middleware/loadUser'));
 
 require('./routes/route')(app, passport);
 

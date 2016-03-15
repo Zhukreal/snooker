@@ -4,6 +4,7 @@
     <title>Node Authentication</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <script src="/vendor/bower_components/jquery/dist/jquery.js"></script>
     <style>
         body        { padding-top:80px; }
     </style>
@@ -21,7 +22,7 @@
         <% } %>
 
         <!-- LOGIN FORM -->
-        <form action="/login" method="post">
+        <form action="/login" method="post" name="login-form">
             <div class="form-group">
                 <label>Email</label>
                 <input type="text" class="form-control" name="email">
@@ -31,7 +32,7 @@
                 <input type="password" class="form-control" name="password">
             </div>
 
-            <button type="submit" class="btn btn-warning btn-lg">Login</button>
+            <button type="submit" class="btn btn-warning btn-lg" data-loading-text="send...">Login</button>
         </form>
 
         <hr>
@@ -43,4 +44,32 @@
 
 </div>
 </body>
+<script>
+    $(document.forms['login-form']).on('submit', function() {
+        var form = $(this);
+
+        $('.error', form).html('');
+        $(":submit", form).button("loading");
+
+        $.ajax({
+            url: "/login",
+            method: "POST",
+            data: form.serialize(),
+            complete: function() {
+                $(":submit", form).button("reset");
+            },
+            statusCode: {
+                200: function() {
+                    form.html("Вы вошли в сайт").addClass('alert-success');
+                    window.location.href = "/";
+                },
+                403: function(jqXHR) {
+                    var error = JSON.parse(jqXHR.responseText);
+                    $('.error', form).html(error.message);
+                }
+            }
+        });
+        return false;
+    });
+</script>
 </html>
