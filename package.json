@@ -6,19 +6,19 @@
     "author": "Evgeniy",
     "contributors": [{
         "name": "Evgeniy Vitkovskiy",
-        "email": "foo.bar@example.com"
+        "email": "jeny.vitkovskiy@gmail.com"
     }, {
         "name": "Evgeniy Zhuk",
-        "email": "foo.bar@example.com"
+        "email": "zhuk.evgeniy97@gmail.com"
     }, {
         "name": "Egor Chizhevskiy",
-        "email": "foo.bar@example.com"
+        "email": "egorkachi@mail.ru"
     }, {
         "name": "Ivan Panchenko",
-        "email": "foo.bar@example.com"
+        "email": "ivan97.minsk@gmail.com"
     }, {
         "name": "Danila Kostyk",
-        "email": "foo.bar@example.com"
+        "email": "danila.kostuyk10@gmail.com"
     }],
     "bin": {
         "module-name": "./bin/www"
