@@ -1,89 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-US">
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="main.css">
-    <script src="libs/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="libs/onepage-scroll/jquery.onepage-scroll.min.js"></script>
-    <link rel="stylesheet" href="libs/onepage-scroll/onepage-scroll.css">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="libs/bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="libs/bower_components/bootstrap/dist/css/bootstrap-theme.css">
-    <link rel="stylesheet" href="libs/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <script src="libs/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="jquery.placeholder.js"></script>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" media="all" href="css/styles.css">
+  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 </head>
+
 <body>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <div class="white">
-<div class="container">
-      <div class="row">
+  <div id="topbar">
+  <a href="#">Header</a>
+  </div>
+  
+  <div id="w">
+    <div id="content" class="clearfix">
+      <div id="userphoto"><img src="images/avatar.png" alt="default avatar"></div>
+      <h1>@nickname</h1>
+
+      <nav id="profiletabs">
+        <ul class="clearfix">
+          <li><a href="#activity">Statistics</a></li>
+          <li><a href="#friends">Friends</a></li>
+          <li><a href="#settings">Settings</a></li>
+        </ul>
+      </nav>
       
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
-   
-   
-          <div class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title">Chernojopka   </h3>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>
-                
-                <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
-                  <dl>
-                    <dt>DEPARTMENT:</dt>
-                    <dd>Administrator</dd>
-                    <dt>HIRE DATE</dt>
-                    <dd>11/12/2013</dd>
-                    <dt>DATE OF BIRTH</dt>
-                       <dd>11/12/2013</dd>
-                    <dt>GENDER</dt>
-                    <dd>Male</dd>
-                  </dl>
-                </div>-->
-                <div class=" col-md-9 col-lg-9 "> 
-                  <table class="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td>Department:</td>
-                        <td>Programming</td>
-                      </tr>
-                      <tr>
-                        <td>Hire date:</td>
-                        <td>06/23/2013</td>
-                      </tr>
-                      <tr>
-                        <td>Date of Birth</td>
-                        <td>01/24/1988</td>
-                      </tr>
-                   
-                         <tr>
-                           
-                       
-                      
-                        <td>Phone Number</td>
-                        <td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)
-                        </td>
-                           
-                      </tr>
-                     
-                    </tbody>
-                  </table>
-                  
-                
-                </div>
-              </div>
-            </div>
-                    
-            
-          </div>
-        </div>
-      </div>
+      <section id="bio">
+        <p>Your gold: {{quantityofGold}}</p>
+        <p>Your silver:{{quantityofSilver}}</p>
+      </section>
+      
+      <section id="activity" class="hidden">
+        <p>You can see your last games:</p>
+        
+        <p class="activity">@10:15PM - Won game</p>
+        
+        <p class="activity">@9:50PM - Lose game</p>
+        
+      </section>
+      
+      <section id="friends" class="hidden">
+        <p>Friends list:</p>
+        
+        <ul id="friendslist" class="clearfix">
+          <li><a href="#"><img src="images/avatar.png" width="22" height="22"> Username</a></li>
+          <li><a href="#"><img src="images/avatar.png" width="22" height="22"> SomeGuy123</a></li>
+          <li><a href="#"><img src="images/avatar.png" width="22" height="22"> Others...</a></li>
+        </ul>
+      </section>
+      
+      <section id="settings" class="hidden">
+        <p>Edit your user settings:</p>
+        
+        <p class="setting"><span>E-mail Address <img src="images/edit.png" alt="*Edit*"></span> lolno@gmail.com</p>
+        
+        <p class="setting"><span>Language <img src="images/edit.png" alt="*Edit*"></span> English(US)</p>
+        
+        <p class="setting"><span>Won the game <img src="images/edit.png" alt="*Edit*"></span> {{quantity}}</p>
+      </section>
     </div>
-</div>
+  </div>
+<script type="text/javascript">
+$(function(){
+  $('#profiletabs ul li a').on('click', function(e){
+    e.preventDefault();
+    var newcontent = $(this).attr('href');
+    
+    $('#profiletabs ul li a').removeClass('sel');
+    $(this).addClass('sel');
+    
+    $('#content section').each(function(){
+      if(!$(this).hasClass('hidden')) { $(this).addClass('hidden'); }
+    });
+    
+    $(newcontent).removeClass('hidden');
+  });
+});
+</script>
 </body>
 </html>
