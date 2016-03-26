@@ -1,0 +1,33 @@
+@import 'onepage-scroll.css'
+
+html
+	color: white
+	text-align: center
+	font-family: Charcoal CY
+	font-size: 30px
+section
+	background: lighten(green,33%)
+	&:nth-child(2)
+		background: lighten(blue,30%)
+		
+.onepage-pagination li a.active:before
+	border-color: white
+
+.onepage-pagination li a:before
+	background-color: white
+.active
+	h1
+		animation: slideInFromUp 2s forwards
+	button
+		animation: slideInFromLeft 2s forwards
+
+@keyframes slideInFromUp
+	0%
+		margin-top: -100%
+	100%
+		margin-top: 0 
+@keyframes slideInFromLeft
+	0%
+		margin-left: -100%
+	100%
+		margin-left: 0 		

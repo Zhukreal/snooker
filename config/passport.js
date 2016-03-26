@@ -20,11 +20,12 @@ module.exports = function (passport) {
     });
     // LOCAL SIGNUP
     passport.use('local-signup', new LocalStrategy({
+            nicknameField: 'nickname',
             usernameField: 'email',
             passwordField: 'password',
             passReqToCallback: true
         },
-        function (req, email, password, done) {
+        function (req,email, password, done) {
             // asynchronous
             process.nextTick(function () {
 
@@ -39,6 +40,7 @@ module.exports = function (passport) {
                         var newUser = new User();
                         newUser.local.email = email;
                         newUser.local.password = newUser.generateHash(password);
+                        newUser.local.nickname = req.body.nickname;
                         newUser.save(function (err) {
                             if (err)
                                 throw err;

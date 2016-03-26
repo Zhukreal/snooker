@@ -1,0 +1,92 @@
+@import 'onepage-scroll.css';
+html {
+  color: #fff;
+  text-align: center;
+  font-family: Charcoal CY;
+  font-size: 30px;
+}
+
+section {
+  background: #00fe00;
+  background: url(snooker.jpg);
+
+}
+section:nth-child(2) {
+  background: #4d4dff;
+}
+.onepage-pagination li a.active:before {
+  border-color: #fff;
+}
+.onepage-pagination li a:before {
+  background-color: #fff;
+}
+.active h1 {
+  -webkit-animation: slideInFromUp 2s forwards;
+          animation: slideInFromUp 2s forwards;
+}
+.active button {
+  -webkit-animation: slideInFromLeft 2s forwards;
+          animation: slideInFromLeft 2s forwards;
+}
+@-webkit-keyframes slideInFromUp {
+  0% {
+    margin-top: -100%;
+  }
+  100% {
+    margin-top: 0;
+  }
+}
+@keyframes slideInFromUp {
+  0% {
+    margin-top: -100%;
+  }
+  100% {
+    margin-top: 0;
+  }
+}
+@-webkit-keyframes slideInFromLeft {
+  0% {
+    margin-left: -100%;
+  }
+  100% {
+    margin-left: 0;
+  }
+}
+@keyframes slideInFromLeft {
+  0% {
+    margin-left: -100%;
+  }
+  100% {
+    margin-left: 0;
+  }
+}
+.button{
+color: white;
+background-color: transparent;
+position: absolute;
+border-radius: 3px;
+border-width: 2px;
+border-color: white;
+width: 300px;
+height: 100px;
+display: inline-block;
+font-size: 50px;
+cursor: pointer;
+text-align: center;
+position: relative;
+ 
+  }
+.button.effect{
+ -webkit-transition: -webkit-transform ease-out 0.1s;
+ -moz-transition: -moz-transform ease-out 0.1s;
+ transition: transform ease-out 0.1s;
+  }
+  
+.button.effect:hover{
+
+ -webkit-transform: scale(0.93);
+ -moz-transform: scale(0.93);
+ -ms-transform: scale(0.93);
+ transform: scale(0.93);
+ color: #fff;
+  }
