@@ -11,18 +11,9 @@ module.exports = function (router, passport) {
     });
 
     router.get('/', function (req, res, next) {
-        if (!req.user)
-            req.user = null;
 
-        var email;
-        if (req.user == null)
-            email = null;
-        else
-            email = req.user.local.email;
         res.render('index', {
-            title: 'Snooker',
-            userID: req.user,
-            userName: email
+            title: 'Snooker'
         });
     });
 
@@ -34,6 +25,27 @@ module.exports = function (router, passport) {
 
     router.get('/game', function (req, res, next) {
         res.render('game');
+    });
+
+    router.get('/tables', function(req, res, next){
+
+        if (!req.user) {
+            var err = new Error('Forbidden');
+            err.status = 503;
+            next(err);
+            req.user = null;
+        }
+
+        var nickname;
+        if (req.user == null)
+            nickname = null;
+        else
+            nickname = req.user.local.email;
+
+        res.render('tables',{
+            userID: req.user,
+            userName: nickname
+        });
     });
 
     router.get('/login', function (req, res, next) {
@@ -73,7 +85,7 @@ module.exports = function (router, passport) {
 
     router.post('/signup',
         passport.authenticate('local-signup', {
-                successRedirect: '/', // redirect to the secure profile section
+                successRedirect: '/tables', // redirect to the secure profile section
                 failureRedirect: '/signup', // redirect back to the signup page if there is an error
                 failureFlash: true // allow flash messages
             }
@@ -81,7 +93,7 @@ module.exports = function (router, passport) {
 
     router.post('/login',
         passport.authenticate('local-login', {
-                successRedirect: '/', // redirect to the secure profile section // profile
+                successRedirect: '/tables', // redirect to the secure profile section // profile
                 failureRedirect: '/login', // redirect back to the signup page if there is an error
                 failureFlash: true // allow flash messages
             }

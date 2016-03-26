@@ -1,15 +1,27 @@
 <!doctype html>
 <html>
 <head>
-    <title>Node Authentication</title>
+    <title>Snooker</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
     <style>
         body        { padding-top:80px; }
     </style>
+
+    <script src="/vendor/bower_components/angular/angular.js"></script>
+    <script src="/vendor/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/javascripts/controllers/MainCtrl.js"></script>
+    <script src="/javascripts/controllers/AboutCtrl.js"></script>
+    <script src="/javascripts/controllers/GameCtrl.js"></script>
+    <script src="/javascripts/controllers/SignUpCtrl.js"></script>
+    <script src="/javascripts/app.js"></script>
+    <script src="/javascripts/appRoutes.js"></script>
+    <script src="/vendor/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
 </head>
-<body>
-<div class="container">
+<body ng-app="sampleApp">
+<div class="container" ng-controller="SignUpController">
 
     <div class="col-sm-6 col-sm-offset-3">
 
@@ -20,8 +32,16 @@
         <div class="alert alert-danger"><%= message %></div>
         <% } %>
 
+        <pre>
+            {{hello}}
+        </pre>
+
         <!-- LOGIN FORM -->
         <form action="/signup" method="post">
+            <div class="form-group">
+                <label>Nickname</label>
+                <input type="text" class="form-control" name="nickname">
+            </div>
             <div class="form-group">
                 <label>Email</label>
                 <input type="text" class="form-control" name="email">
@@ -30,8 +50,11 @@
                 <label>Password</label>
                 <input type="password" class="form-control" name="password">
             </div>
-
-            <button type="submit" class="btn btn-warning btn-lg">Signup</button>
+            <div class="form-group">
+                <label>Photo</label>
+                <input type="file" class="form-control" name="photo" file-model="myFile">
+            </div>
+            <button type="submit" class="btn btn-warning btn-lg" ng-file-select="onFileSelect($files)">Signup</button>
         </form>
 
         <hr>

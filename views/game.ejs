@@ -1,3 +1,17 @@
-<div ng-app="sampleApp" ng-controller="GameController">
-    {{info}}
+
+<script src="/vendor/bower_components/angular/angular.js"></script>
+<script src="/vendor/bower_components/angular-route/angular-route.min.js"></script>
+<script src="/javascripts/controllers/MainCtrl.js"></script>
+<script src="/javascripts/controllers/AboutCtrl.js"></script>
+<script src="/javascripts/controllers/GameCtrl.js"></script>
+<script src="/javascripts/appRoutes.js"></script>
+<script src="/javascripts/app.js"></script>
+<script src="/vendor/bower_components/jquery/dist/jquery.js"></script>
+<script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<div ng-app="sampleApp" >
+    <div  ng-controller="GameController">
+        {{info}}
+        <canvas id="mycanvas" width="400" height="400"></canvas>
+        <script src="build/bundle.js"></script>
+    </div>
 </div>

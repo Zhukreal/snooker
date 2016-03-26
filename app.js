@@ -10,6 +10,10 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 
+/*var uuid = require('uuid'); // https://github.com/defunctzombie/node-uuid
+var multiparty = require('multiparty'); // https://github.com/andrewrk/node-multiparty
+var s3 = require('s3'); // https://github.com/andrewrk/node-s3-client*/
+
 var compression = require('compression');
 //var io = require('socket.io');
 
@@ -73,6 +77,7 @@ app.use(passport.session());
 app.use(flash());
 //app.use('/', routes);
 //app.use(require('middleware/loadUser'));
+//app.use(require('middleware/uploadPhoto'));
 
 require('./routes/route')(app, passport);
 
@@ -85,6 +90,11 @@ app.use(function (req, res, next) {
     err.status = 404;
     next(err);
 });
+//app.use(function (req, res, next) {
+//    var err = new Error('Forbidden');
+//    err.status = 505;
+//    next(err);
+//});
 
 // error handlers
 

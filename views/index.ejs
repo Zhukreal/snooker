@@ -13,25 +13,37 @@
     <script src="/javascripts/controllers/GameCtrl.js"></script>
     <script src="/javascripts/appRoutes.js"></script>
     <script src="/javascripts/app.js"></script>
-    <script src="/vendor/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/vendor/bower_components/jquery/jquery.min.js"></script>
+    <script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/vendor/bower_components/onepage-scroll/jquery.onepage-scroll.min.js"></script>
+    <script src="/javascripts/scroll.js"></script>
+    <link rel="stylesheet" href="/vendor/bower_components/onepage-scroll/onepage-scroll.css">
 </head>
 <body ng-controller="MainController">
-<header>
-    <% include ./partials/header %>
-</header>
+<div class="wrapper">
+    <div class="main">
+        <section class="page1">
 
-<div>
-    Do u wanna <a href="#/game">Play game</a>
+            <a class="nav-to des-button-white des-button-white-1 des-button-white-1d bt2" href="/signup"><span>Sign up</span></a>
+
+
+        </section>
+
+
+        <!--<a class="nav-to des-button-white des-button-white-1 des-button-white-1d bt2" href="#portfolio"><span>OUR PORTFOLIO</span></a>-->
+        <section class="page2">
+
+        </section>
+
+        <section class="page3">
+            
+        </section>
+    </div>
+    <!-- <a class="back" href="http://www.thepetedesign.com/#design">Back to The Pete Design</a>
+    <a href="https://github.com/peachananr/onepage-scroll"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a> -->
 </div>
-<h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
-<pre>{{hello}}</pre>
-<div ng-view></div>
 
-<footer>
-    <% include ./partials/footer %>
-</footer>
+
 </body>
 
 <script>

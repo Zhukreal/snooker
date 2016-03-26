@@ -22,6 +22,7 @@ module.exports = function (passport) {
     passport.use('local-signup', new LocalStrategy({
             usernameField: 'email',
             passwordField: 'password',
+            nicknameField: 'nickname',
             passReqToCallback: true
         },
         function (req, email, password, done) {
@@ -39,6 +40,28 @@ module.exports = function (passport) {
                         var newUser = new User();
                         newUser.local.email = email;
                         newUser.local.password = newUser.generateHash(password);
+                        newUser.local.nickname = req.body.nickname;
+
+                        /*console.log(req.files);
+                        if(req.files.file){
+                            const fs = require('fs');
+                            fs.readFile(req.files.file.path, function(dataErr, data){
+                                if(data){
+                                    user.local.photo = '';
+                                    user.local.photo = data;
+                                    user.save(function(saveErr,saveUser){
+                                        if(saveErr){
+                                            throw saveErr;
+                                        }
+                                        res.json(HttpStatus.OK, saveUser);
+                                    })
+                                }
+                            });
+                            return;
+                        }
+                        res.json(HttpStatus.BAD_REQUEST,{error: "Error in file upload"});*/
+
+
                         newUser.save(function (err) {
                             if (err)
                                 throw err;
