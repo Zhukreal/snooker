@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="libs/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="libs/onepage-scroll/jquery.onepage-scroll.min.js"></script>
+    <link rel="stylesheet" href="libs/onepage-scroll/onepage-scroll.css">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="libs/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="libs/bower_components/bootstrap/dist/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="libs/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="libs/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="jquery.placeholder.js"></script>
+    
+</head>
+
+<body>
+      <div class="container">
+    <div class="row">
+        <p class="text-center"><a href="#" class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#login-modal">Кнопка на нашем сайте</a></p>
+    </div>
+</div>
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" align="center">
+                    <img class="img-circle" id="img_logo" src="images/snooker.png">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                </div>
+                
+                
+                <div id="div-forms">
+                
+                    
+                    <form id="login-form">
+                        <div class="modal-body">
+                            <div id="div-login-msg">
+                                <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
+                                <span id="text-login-msg">Введите логин и пароль</span>
+                            </div>
+                            <input id="login_username" class="form-control" type="text" placeholder="Логин" required>
+                            <input id="login_password" class="form-control" type="password" placeholder="Пароль" required>
+                        </div>
+                        <div class="modal-footer">
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Войти</button>
+                            </div>
+                            <div>
+                                <button id="login_lost_btn" type="button" class="btn btn-link">Забыли пароль?</button>
+                                <button id="login_register_btn" type="button" class="btn btn-link">Зарегистрироваться</button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    
+                    
+                    <form id="lost-form" style="display:none;">
+                        <div class="modal-body">
+                            <div id="div-lost-msg">
+                                <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
+                                <span id="text-lost-msg">Введите ваш e-mail.</span>
+                            </div>
+                            <input id="lost_email" class="form-control" type="text" placeholder="E-Mail " required>
+                        </div>
+                        <div class="modal-footer">
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Отправить</button>
+                            </div>
+                            <div>
+                                <button id="lost_login_btn" type="button" class="btn btn-link">Войти</button>
+                                <button id="lost_register_btn" type="button" class="btn btn-link">Зарегистрироваться</button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    
+                    
+                    <form id="register-form" style="display:none;">
+                        <div class="modal-body">
+                            <div id="div-register-msg">
+                                <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
+                                <span id="text-register-msg">Регистрация аккаунта</span>
+                            </div>
+                            <input id="register_username" class="form-control" type="text" placeholder="Логин(Nickname)" required>
+                            <input id="register_email" class="form-control" type="text" placeholder="E-Mail" required>
+                            <input id="register_password" class="form-control" type="password" placeholder="Пароль" required>
+
+                        </div>
+                        
+
+                        <div class="modal-footer">
+                            <div class="fileUpload btn btn-primary">
+                            <span>Загрузить фото</span>
+                            <input type="file" class="upload" />
+                          </div>
+                                                     
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Зарегистрироваться</button>
+                            </div>
+                            <div>
+                                <button id="register_login_btn" type="button" class="btn btn-link">Войти</button>
+                                <button id="register_lost_btn" type="button" class="btn btn-link">Забыли пароль?</button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
