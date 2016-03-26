@@ -2,6 +2,10 @@
 //var router = express.Router();
 
 //require('../config/passport')(passport);
+var HttpError = require('../error/HttpError').HttpError;
+
+//var checkAuth = require('../middleware/checkAuth');
+
 
 module.exports = function (router, passport) {
 
@@ -27,12 +31,17 @@ module.exports = function (router, passport) {
         res.render('game');
     });
 
+
+
     router.get('/tables', function(req, res, next){
 
         if (!req.user) {
-            var err = new Error('Forbidden');
-            err.status = 503;
-            next(err);
+            /*res.status(403);
+            //res.redirect('503');
+            res.render('403');*/
+            next(new HttpError(401, "Вы не авторизованы"));
+            res.render('error');
+            //next(new HttpError(401,'you\'re not auth'));
             req.user = null;
         }
 

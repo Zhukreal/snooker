@@ -9,6 +9,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
+var HttpError = require('./error/HttpError').HttpError;
 
 /*var uuid = require('uuid'); // https://github.com/defunctzombie/node-uuid
 var multiparty = require('multiparty'); // https://github.com/andrewrk/node-multiparty
@@ -63,6 +64,8 @@ app.use(session({
     //cookie: { secure: true }
     store: /*sessionStore*/ new MongoStore({mongooseConnection: mongoose.connection})
 }));
+
+app.use(require('middleware/sendHttpError'));
 
 /*app.use(function(req,res, next){
  req.session.numberOfVisits = req.session.numberOfVisits + 1 ;
