@@ -13,13 +13,16 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-html { overflow-y: scroll; }
+
+
+html { overflow-y: scroll; height: 100%;}
 body { 
   background: #f0f0f0; 
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #313131;
   font-size: 62.5%; 
   line-height: 1; 
+  height: 100%;
 }
 
 ::selection { background: #a4dcec; }
@@ -267,6 +270,13 @@ a:hover { text-decoration: underline; }
   line-height: 22px;
    margin-right: 15px;
   border: 1px solid #c9d8b8;
+}
+.footer {
+  height: 50px; 
+ background: gainsboro;
+ position: absolute;
+ bottom: 0;
+ width: 100%;
 }
 
 #friendslist li a img { float: left; margin-right: 5px; }
