@@ -65,7 +65,7 @@ app.use(session({
     store: /*sessionStore*/ new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
-app.use(require('middleware/sendHttpError'));
+// app.use(require('middleware/sendHttpError'));
 
 /*app.use(function(req,res, next){
  req.session.numberOfVisits = req.session.numberOfVisits + 1 ;
