@@ -1,6 +1,6 @@
 {
   "name": "Snooker",
-  "version": "0.0.1",
+  "version": "1.1.15",
   "dependencies": {
     "bootstrap": "latest",
     "modernizr": "~2.6.2",
@@ -9,11 +9,12 @@
     "angular": "latest",
     "angular-route": "latest",
     "socket.io-client": "latest",
-    "font-awesome": "latest"
+    "font-awesome": "latest",
+    "less":"latest"
   },
   "private": true,
   "directory": "./public/vendor/bower_components",
-  "homepage": "https://github.com/zhukevgeniy/snooker",
+  "homepage": "https://github.com/courework-snooker/snooker/",
   "authors": [
     "Zhuk Evgeniy <zhuk.evgeniy97@gmail.com>"
   ],
