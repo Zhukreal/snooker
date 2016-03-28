@@ -16,8 +16,13 @@ module.exports = function (router, passport) {
 
 
     router.get('/', function (req, res, next) {
-        if (!req.user)
+        if (!req.user) {
             req.user = null;
+        }else{
+            res.redirect('tables');
+        }
+
+
         res.render('index', {
             title: 'Snooker'
         });
