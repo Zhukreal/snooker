@@ -8,8 +8,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var thumbnailPluginLib = require('mongoose-thumbnail');
-var thumbnailPlugin = thumbnailPluginLib.thumbnailPlugin;
+//var thumbnailPluginLib = require('mongoose-thumbnail');
+//var thumbnailPlugin = thumbnailPluginLib.thumbnailPlugin;
 var passport = require('passport');
 var HttpError = require('./error/HttpError').HttpError;
 
