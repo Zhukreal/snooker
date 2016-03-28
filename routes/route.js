@@ -50,7 +50,7 @@ module.exports = function (router, passport) {
         if (req.user == null)
             nickname = null;
         else
-            nickname = req.user.local.email;
+            nickname = req.user.local.nickname;
 
         res.render('tables', {
             userID: req.user,
@@ -72,11 +72,30 @@ module.exports = function (router, passport) {
         });
     });
 
-    router.get('/profile', isLoggedIn, function (req, res, next) {
+
+    /*router.param('id', function(req, res, next, id){
+
+        var user = User.find({_id:id});
+        if(user){
+            req.user = user;
+        }else{
+            next(new Error());
+        }
+
+        next();
+    });*/
+
+
+    router.get('/profile/:id', isLoggedIn, function (req, res, next) {
+
+        console.log(req.params.id);
+
         res.render('profile', {
             user: req.user
         });
     });
+
+
 
     router.get('/logout', function (req, res) {
         req.logout();
