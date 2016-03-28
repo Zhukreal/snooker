@@ -67,7 +67,8 @@ module.exports = function (router, passport) {
 
     router.get('/signup', function (req, res, next) {
         res.render('signup', {
-            message: req.flash('signupMessage')
+            message: req.flash('signupMessage'),
+            temp: "lol"
         });
     });
 

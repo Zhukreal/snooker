@@ -16,7 +16,7 @@
     <script src="/javascripts/controllers/SignUpCtrl.js"></script>
     <script src="/javascripts/app.js"></script>
     <script src="/javascripts/appRoutes.js"></script>
-    <script src="/vendor/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/vendor/bower_components/jquery/jquery.min.js"></script>
     <script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
 </head>
@@ -37,11 +37,7 @@
         </pre>
 
         <!-- LOGIN FORM -->
-        <form action="/signup" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label>Nickname</label>
-                <input type="text" class="form-control" name="nickname">
-            </div>
+        <form action="/signup" method="post" ><!--enctype="multipart/form-data"-->
             <div class="form-group">
                 <label>Nickname</label>
                 <input type="text" class="form-control" name="nickname">
@@ -57,14 +53,6 @@
             <div class="form-group">
                 <label>Photo</label>
                 <input type="file" class="form-control" name="photo" file-model="myFile">
-            </div>
-            <button type="submit" class="btn btn-warning btn-lg" ng-file-select="onFileSelect($files)">Signup</button>
-                <label>Data</label>
-                <input type="filename" class="form-control" name="filename">
-            </div>
-            <div class="form-group">
-                <label>Photo</label>
-                <input type="file" class="form-control" name="file">
             </div>
 
             <button type="submit" class="btn btn-warning btn-lg">Signup</button>

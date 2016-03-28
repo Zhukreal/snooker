@@ -23,7 +23,6 @@ module.exports = function (passport) {
             nicknameField: 'nickname',
             usernameField: 'email',
             passwordField: 'password',
-            nicknameField: 'nickname',
             passReqToCallback: true
         },
         function (req, email, password, done) {
