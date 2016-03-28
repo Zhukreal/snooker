@@ -42,6 +42,8 @@
         "morgan": "~1.6.1",
         "serve-favicon": "~2.3.0",
         "mongoose": "~3.8.1",
+        "mongoose-file": "*",
+        "mongoose-thumbnail":"*",
         "connect-mongo": "latest",
         "compression": "latest",
         "async":"latest",

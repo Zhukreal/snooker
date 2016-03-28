@@ -37,7 +37,11 @@
         </pre>
 
         <!-- LOGIN FORM -->
-        <form action="/signup" method="post">
+        <form action="/signup" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Nickname</label>
+                <input type="text" class="form-control" name="nickname">
+            </div>
             <div class="form-group">
                 <label>Nickname</label>
                 <input type="text" class="form-control" name="nickname">
@@ -55,6 +59,15 @@
                 <input type="file" class="form-control" name="photo" file-model="myFile">
             </div>
             <button type="submit" class="btn btn-warning btn-lg" ng-file-select="onFileSelect($files)">Signup</button>
+                <label>Data</label>
+                <input type="filename" class="form-control" name="filename">
+            </div>
+            <div class="form-group">
+                <label>Photo</label>
+                <input type="file" class="form-control" name="file">
+            </div>
+
+            <button type="submit" class="btn btn-warning btn-lg">Signup</button>
         </form>
 
         <hr>

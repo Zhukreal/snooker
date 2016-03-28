@@ -8,6 +8,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var thumbnailPluginLib = require('mongoose-thumbnail');
+var thumbnailPlugin = thumbnailPluginLib.thumbnailPlugin;
 var passport = require('passport');
 var HttpError = require('./error/HttpError').HttpError;
 
@@ -19,6 +21,8 @@ var compression = require('compression');
 //var io = require('socket.io');
 
 var configDB = require('./config/db.js');
+
+// var fs = require('fs');
 
 var app = express();
 
