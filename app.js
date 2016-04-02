@@ -4,31 +4,28 @@ var cookieParser = require('cookie-parser');
 var flash = require('connect-flash-light');
 var path = require('path');
 var favicon = require('serve-favicon');
+var multer = require('multer');
 //var logger = require('./utils/logger');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-//var thumbnailPluginLib = require('mongoose-thumbnail');
-//var thumbnailPlugin = thumbnailPluginLib.thumbnailPlugin;
 var passport = require('passport');
 var HttpError = require('./error/HttpError').HttpError;
-
-/*var uuid = require('uuid'); // https://github.com/defunctzombie/node-uuid
-var multiparty = require('multiparty'); // https://github.com/andrewrk/node-multiparty
-var s3 = require('s3'); // https://github.com/andrewrk/node-s3-client*/
-
 var compression = require('compression');
 //var io = require('socket.io');
-
 var configDB = require('./config/db.js');
 
-// var fs = require('fs');
+var fs = require('fs');
 
 var app = express();
 
 mongoose.connect(configDB.url);
 
-//var routes = require('./routes/route');
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow_origin", "http://localhost");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 var users = require('./routes/users');
 
@@ -50,13 +47,45 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(logger('dev'));
 
+
 //logger/ winston with morgan uncomment after all
 
 /*logger.debug("Overriding 'Express' logger");
  app.use(require('morgan')({ "stream": logger.stream }));*/
 
+//app.use(bodyParser({
+//    extended: true
+//}));
+/*{
+ keepExtention: true,
+ uploadDir: './public/images'
+ }*/
+//app.use(bodyParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+//app.use(multer({
+//    dest: './public/userPhotos',
+//    filename: function (req, file, cb) {
+//        var datetimestamp = Date.now();
+//        cb(null, datetimestamp + '.jpg' /*file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1] + path.extname(file.originalname)*/)
+//    }
+//}).single('file'));
+
+
+//var storage = multer.diskStorage({ //multers disk storage settings
+//    destination: function (req, file, cb) {
+//        cb(null, './public/images')
+//    },
+//    filename: function (req, file, cb) {
+//        var datetimestamp = Date.now();
+//        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
+//    }
+//});
+//
+//var upload = multer({ //multer settings
+//    storage: storage
+//}).single('file');
 
 //var sessionStore = require(./lib/sessionStore);
 var MongoStore = require('connect-mongo')(session);
@@ -77,8 +106,6 @@ app.use(session({
  })*/
 
 
-
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -86,9 +113,14 @@ app.use(flash());
 //app.use(require('middleware/loadUser'));
 //app.use(require('middleware/uploadPhoto'));
 
+//app.use(multer({
+//    dest: './public/images/'
+//}));
+
 require('./routes/route')(app, passport);
 
 app.use('/users', users);
+
 
 
 // catch 404 and forward to error handler

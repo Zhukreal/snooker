@@ -41,27 +41,9 @@ module.exports = function (passport) {
                         newUser.local.email = email;
                         newUser.local.password = newUser.generateHash(password);
                         newUser.local.nickname = req.body.nickname;
-
-
-                        /*console.log(req.files);
-                         if(req.files.file){
-                         const fs = require('fs');
-                         fs.readFile(req.files.file.path, function(dataErr, data){
-                         if(data){
-                         user.local.photo = '';
-                         user.local.photo = data;
-                         user.save(function(saveErr,saveUser){
-                         if(saveErr){
-                         throw saveErr;
-                         }
-                         res.json(HttpStatus.OK, saveUser);
-                         })
-                         }
-                         });
-                         return;
-                         }
-                         res.json(HttpStatus.BAD_REQUEST,{error: "Error in file upload"});*/
-
+                        newUser.local.photo.data = req.body.file;
+                        //newUser.local.photo.contentType = req.body.
+                        console.log(req.file);
                         newUser.save(function (err) {
                             if (err)
                                 throw err;

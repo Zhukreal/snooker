@@ -1,4 +1,4 @@
-angular.module('sampleApp', ['ngRoute','appRoutes','MainCtrl','AboutCtrl','GameCtrl','SignUpCtrl'])
+angular.module('sampleApp', ['ngRoute','appRoutes','MainCtrl','AboutCtrl','GameCtrl','ngFileUpload','SignUpCtrl'])
 
     .directive('fileModel', ['$parse', function ($parse) {
     return {

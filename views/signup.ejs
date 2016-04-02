@@ -10,12 +10,15 @@
 
     <script src="/vendor/bower_components/angular/angular.js"></script>
     <script src="/vendor/bower_components/angular-route/angular-route.min.js"></script>
+    <!--<script src="/vendor/bower_components/ng-file-upload/ng-file-upload-shim.js"></script>-->
+    <script src="/vendor/bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="/javascripts/controllers/MainCtrl.js"></script>
     <script src="/javascripts/controllers/AboutCtrl.js"></script>
     <script src="/javascripts/controllers/GameCtrl.js"></script>
-    <script src="/javascripts/controllers/SignUpCtrl.js"></script>
+
     <script src="/javascripts/app.js"></script>
     <script src="/javascripts/appRoutes.js"></script>
+    <script src="/javascripts/controllers/SignUpCtrl.js"></script>
     <script src="/vendor/bower_components/jquery/jquery.min.js"></script>
     <script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
@@ -37,7 +40,7 @@
         </pre>
 
         <!-- LOGIN FORM -->
-        <form action="/signup" method="post" ><!--enctype="multipart/form-data"-->
+        <form action="/signup" method="post" name="form" ><!--enctype="multipart/form-data"-->
             <div class="form-group">
                 <label>Nickname</label>
                 <input type="text" class="form-control" name="nickname">
@@ -52,13 +55,15 @@
             </div>
             <div class="form-group">
                 <label>Photo</label>
-                <input type="file" class="form-control" name="photo" file-model="myFile">
+                <input type="file" class="form-control" ngf-select name="file" ng-model="file"  ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
             </div>
 
-            <button type="submit" class="btn btn-warning btn-lg">Signup</button>
+            <button type="submit" class="btn btn-warning btn-lg" ng-click="submit()">Signup</button>
         </form>
 
         <hr>
+
+
 
         <p>Already have an account? <a href="/login">Login</a></p>
         <p>Or go <a href="/">home</a>.</p>

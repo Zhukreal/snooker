@@ -1,11 +1,9 @@
-//var express = require('express');
-//var router = express.Router();
-
 //require('../config/passport')(passport);
 var HttpError = require('../error/HttpError').HttpError;
-
+var multer = require('multer');
+var path = require('path');
+var User = require('../models/user').User;
 //var checkAuth = require('../middleware/checkAuth');
-
 
 module.exports = function (router, passport) {
 
@@ -14,15 +12,10 @@ module.exports = function (router, passport) {
         next();
     });
 
-
     router.get('/', function (req, res, next) {
-        if (!req.user) {
-            req.user = null;
-        }else{
+        if (req.isAuthenticated()) {
             res.redirect('tables');
         }
-
-
         res.render('index', {
             title: 'Snooker'
         });
@@ -34,6 +27,7 @@ module.exports = function (router, passport) {
         });
     });
 
+
     router.get('/game', function (req, res, next) {
         res.render('game');
     });
@@ -41,10 +35,14 @@ module.exports = function (router, passport) {
 
     router.get('/tables', function (req, res, next) {
 
+        //console.log(req.user);
+        //res.end(req.user);
+        console.log(req.user);
+
         if (!req.user) {
-            /*res.status(403);
-             //res.redirect('503');
-             res.render('403');*/
+            //res.status(403);
+            //res.redirect('503');
+            //res.render('403');!
             next(new HttpError(401, "Вы не авторизованы"));
             res.render('error');
             //next(new HttpError(401,'you\'re not auth'));
@@ -57,13 +55,26 @@ module.exports = function (router, passport) {
         else
             nickname = req.user.local.nickname;
 
+        console.log(req.user.local.cash);
+
+        //User.update({_id: req.id}, {$set: {'local.cash': 45}});
+
+
         res.render('tables', {
             userID: req.user,
-            userName: nickname
+            userName: nickname,
+            userPhoto: req.user.local.photo.data/*,
+             userInfo: req.user.local.photo*/
+            //temp : req.user.local.photo
         });
     });
 
-
+    /*function (req, res, next) {
+     /*console.log(req.file);
+     res.end();
+     sdkj
+     User.update({_id: req.id}, {$set: {'local.cash': 45}});
+     },*/
     router.get('/login', function (req, res, next) {
         res.render('login', {
             message: req.flash('loginMessage')
@@ -77,29 +88,15 @@ module.exports = function (router, passport) {
         });
     });
 
-
-    /*router.param('id', function(req, res, next, id){
-
-        var user = User.find({_id:id});
-        if(user){
-            req.user = user;
-        }else{
-            next(new Error());
-        }
-
-        next();
-    });*/
-
-
     router.get('/profile/:id', isLoggedIn, function (req, res, next) {
 
-        console.log(req.params.id);
+        //console.log(req.params.id);
 
         res.render('profile', {
-            user: req.user
+            user: req.user,
+            userPhoto: req.user.local.photo.data
         });
     });
-
 
 
     router.get('/logout', function (req, res) {
@@ -120,13 +117,42 @@ module.exports = function (router, passport) {
             res.redirect('/');
     }
 
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, './public/userPhotos')
+        },
+        filename: function (req, file, cb) {
+            var datetimestamp = Date.now();
+            //console.log(req.user);
+            //console.log(file.originalname.split('.')[file.originalname.split('.').length - 1]);
+            cb(null, /*file.fieldname*/  /*file.originalname.split('.')[file.originalname.split('.').length - 1]*/ /*datetimestamp + file.fieldname*/ /*+ */file.originalname.split('.', 1) + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1] /*+ path.extname(file.originalname)*/)
+        }
+    });
+    var upload = multer({storage: storage});
+
     router.post('/signup',
+        /*multer(
+         {
+         extension: true,
+         dest: './public/userPhotos',
+         filename: function (req, file, cb) {
+         var datetimestamp = Date.now();
+         console.log(datetimestamp);
+         cb(null, datetimestamp + '.jpg' /!*file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1] + path.extname(file.originalname)*!/)
+         }
+
+         })*/
+        upload.single('file'),
+
+
         passport.authenticate('local-signup', {
-                successRedirect: '/tables', // redirect to the secure profile section
-                failureRedirect: '/signup', // redirect back to the signup page if there is an error
-                failureFlash: true // allow flash messages
-            }
-        ));
+            successRedirect: '/tables', // redirect to the secure profile section
+            failureRedirect: '/signup', // redirect back to the signup page if there is an error
+            failureFlash: true // allow flash messages
+
+        })
+    );
+
 
     // router.post('/signup', function(req, res) {
     //     req.form.complete(function(err, fields, files) {
