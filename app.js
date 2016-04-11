@@ -14,6 +14,7 @@ var HttpError = require('./error/HttpError').HttpError;
 var compression = require('compression');
 //var io = require('socket.io');
 var configDB = require('./config/db.js');
+var parseurl = require('parseurl');
 
 var fs = require('fs');
 
@@ -97,6 +98,24 @@ app.use(session({
     //cookie: { secure: true }
     store: /*sessionStore*/ new MongoStore({mongooseConnection: mongoose.connection})
 }));
+
+
+app.use(function(req, res, next){
+    var views = req.session.views;
+
+    if(!views)
+        views = req.session.views = {};
+
+    var pathname = parseurl(req).pathname;
+
+    views[pathname] = (views[pathname] || 0) + 1;
+
+    next();
+});
+
+app.get('/lol', function(req, res, next){
+    res.send('you viewed this page ' + req.session.views['/lol'] + ' times');
+})
 
 // app.use(require('middleware/sendHttpError'));
 

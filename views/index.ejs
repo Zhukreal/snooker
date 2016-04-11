@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="sampleApp">
+<html lang="en" ng-app="MainCtrl">
 <head>
     <!--<base href="/">-->
     <title><%= title %></title>
@@ -7,26 +7,50 @@
     <link rel="stylesheet" href="/vendor/bower_components/bootstrap/dist/css/bootstrap.css">
     <script src="/vendor/bower_components/socket.io-client/socket.io.js"></script>
     <script src="/vendor/bower_components/angular/angular.js"></script>
-    <script src="/vendor/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/vendor/bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <!--<script src="/vendor/bower_components/angular-route/angular-route.min.js"></script>-->
     <script src="/javascripts/controllers/MainCtrl.js"></script>
-    <script src="/javascripts/controllers/AboutCtrl.js"></script>
-    <script src="/javascripts/controllers/GameCtrl.js"></script>
-    <script src="/javascripts/appRoutes.js"></script>
+    <!--<script src="/javascripts/controllers/AboutCtrl.js"></script>-->
+    <!--<script src="/javascripts/controllers/GameCtrl.js"></script>-->
+    <!--<script src="/javascripts/appRoutes.js"></script>-->
     <script src="/javascripts/app.js"></script>
     <script src="/vendor/bower_components/jquery/jquery.min.js"></script>
     <script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/vendor/bower_components/onepage-scroll/jquery.onepage-scroll.min.js"></script>
     <script src="/javascripts/scroll.js"></script>
-    <script src ="/vendor/plax/js/plax.js"></script>
+    <script src="/vendor/bower_components/plax/js/plax.js"></script>
     <script src="/javascripts/pretty.js"></script>
     <link rel="stylesheet" href="/vendor/bower_components/onepage-scroll/onepage-scroll.css">
 </head>
+<style>
+    #ajax_loader{
+        display:none;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        alert("lol");
+        $(document)
+                .ajaxStart(function () {
+                    $("#ajax_loader").show();
+                })
+                .ajaxStop(function () {
+                    $("#ajax_loader").hide();
+                })
+    })
+</script>
+
 <body ng-controller="MainController">
 <div class="wrapper">
     <div class="main">
         <section class="page1">
-
-            <a class="nav-to des-button-white des-button-white-1 des-button-white-1d bt2" href="/signup"><span>Sign up</span></a>
+            <div>
+                <img src="/images/ajax-loader.gif" id="ajax_loader" alt="">
+            </div>
+            <a class="nav-to des-button-white des-button-white-1 des-button-white-1d bt2"
+               href="/signup"><span>Sign up</span></a>
+            <!--<pre>{{hello}}</pre>-->
 
 
         </section>
@@ -73,5 +97,8 @@
     //    alert(io.sockets.clients().length);
 
 </script>
+
+
+
 <!--<script src="../public/javascripts/index.js"></script>-->
 </html>

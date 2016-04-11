@@ -16,6 +16,17 @@ module.exports = function (router, passport) {
         if (req.isAuthenticated()) {
             res.redirect('tables');
         }
+
+        var User = require('../models/user');
+
+        User.find({},function(e,users){
+            if(e)
+                throw new Error();
+            console.log(users);
+        });
+
+        console.log(req.cookies);
+
         res.render('index', {
             title: 'Snooker'
         });
