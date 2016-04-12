@@ -7,11 +7,14 @@
     "angular-route": "latest",
     "animate.css": "latest",
     "bootstrap": "latest",
-    "modernizr": "~2.6.2",
-    "jquery": "latest",
-    "socket.io-client": "latest",
     "font-awesome": "latest",
-    "less": "latest"
+    "jquery": "latest",
+    "less": "latest",
+    "modernizr": "~2.6.2",
+    "ng-file-upload" : "latest",
+    "ng-file-upload-shim": "latest",
+    "onepage-scroll":"latest",
+    "socket.io-client": "latest"
   },
   "private": true,
   "directory": "./public/vendor/bower_components",
