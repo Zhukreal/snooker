@@ -89,7 +89,8 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-var io = require('socket.io').listen(server);
+require('../io/io')(server);
+
 
 
 /*io.set('authorization', function (handshakeData, accept) {
@@ -110,7 +111,11 @@ var io = require('socket.io').listen(server);
 
   accept(null, true);
 });*/
-require('../socket/index');
+
+
+
+//require('../socket/index');
+
 /*io.on('connection', function(socket){
 
   if(!socket.handshake.session.name){

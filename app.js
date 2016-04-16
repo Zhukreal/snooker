@@ -1,23 +1,20 @@
-var express = require('express');
-var session = require('express-session');
-var cookieParser = require('cookie-parser');
-var flash = require('connect-flash-light');
-var path = require('path');
-var favicon = require('serve-favicon');
-var multer = require('multer');
-//var logger = require('./utils/logger');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var passport = require('passport');
-var HttpError = require('./error/HttpError').HttpError;
-var compression = require('compression');
+const express = require('express');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const flash = require('connect-flash-light');
+const path = require('path');
+const favicon = require('serve-favicon');
+const multer = require('multer');
+//const logger = require('./utils/logger');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const HttpError = require('./error/HttpError').HttpError;
+const compression = require('compression');
 //var io = require('socket.io');
-var configDB = require('./config/db.js');
-var parseurl = require('parseurl');
-
-var fs = require('fs');
-
+const configDB = require('./config/db.js');
+const parseurl = require('parseurl');
 var app = express();
 
 mongoose.connect(configDB.url);
@@ -88,7 +85,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 //    storage: storage
 //}).single('file');
 
-//var sessionStore = require(./lib/sessionStore);
+//var sessionStore = require('./lib/sessionStore');
 var MongoStore = require('connect-mongo')(session);
 
 app.use(session({
@@ -115,7 +112,7 @@ app.use(function(req, res, next){
 
 app.get('/lol', function(req, res, next){
     res.send('you viewed this page ' + req.session.views['/lol'] + ' times');
-})
+});
 
 // app.use(require('middleware/sendHttpError'));
 

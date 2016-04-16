@@ -2,8 +2,10 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 
 var userSchema = new mongoose.Schema({
-
     local: {
+        id:{
+            type: String
+        },
         nickname: {
             type: String,
             default: ''
@@ -27,6 +29,10 @@ var userSchema = new mongoose.Schema({
         cash: {
             type: Number,
             default: 0
+        },
+        mapId:{
+            type: Number,
+            default: -1
         }
     },
     facebook: {
@@ -56,6 +62,11 @@ userSchema.methods.generateHash = function(password){
 
 userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.local.password);
+};
+
+userSchema.methods.joinMap = function(map){
+    this.timeStamp = new Date().getDate();
+    this.mapId = map.id;
 };
 
 module.exports = mongoose.model('User', userSchema);

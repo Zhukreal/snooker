@@ -1,20 +1,9 @@
-var app = angular.module('appRoutes', ['ngRoute'])
-    .config(['$routeProvider', function ($routeProvider) {//, $locationProvider
-        $routeProvider
-            .when('/', {
-                templateURL: 'views/index.ejs',
-                controller: 'MainController'
-            })
-            .when('/about', {
-                templateURL: 'views/about.ejs',
-                controller: 'AboutController'
-            })
-            .when('/game', {
-                templateUR: 'views/game.ejs',
-                controller: 'GameController'
-            })
-            .otherwise({
-                redirectTo: '/'
+var app = angular.module('appRoutes', ['ui.router'])
+    .config(['$stateProvider', function ($stateProvider) {//, $locationProvider
+        $stateProvider
+            .state('menu',{
+                url:'',
+                template: '<h2>Menu</h2>'
             });
 
         //$locationProvider.html5Mode({

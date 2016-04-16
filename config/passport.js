@@ -7,6 +7,7 @@ var User = require('../models/user');
 
 var configAuth = require('./auth');
 
+
 module.exports = function (passport) {
 
     passport.serializeUser(function (user, done) {
@@ -43,10 +44,12 @@ module.exports = function (passport) {
                         newUser.local.nickname = req.body.nickname;
                         newUser.local.photo.data = req.body.file;
                         //newUser.local.photo.contentType = req.body.
-                        console.log(req.file);
+                        //console.log(req.file);
                         newUser.save(function (err) {
                             if (err)
                                 throw err;
+                            req.session.user = user;
+                            req.cookies.user = user;
                             return done(null, newUser);
                         });
                     }
@@ -77,6 +80,7 @@ module.exports = function (passport) {
 
                 // all is well, return successful user
                 req.session.user = user;
+                req.cookies.user = user;
                 return done(null, user);
             });
 

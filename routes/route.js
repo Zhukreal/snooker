@@ -2,7 +2,6 @@
 var HttpError = require('../error/HttpError').HttpError;
 var multer = require('multer');
 var path = require('path');
-var User = require('../models/user').User;
 //var checkAuth = require('../middleware/checkAuth');
 
 module.exports = function (router, passport) {
@@ -17,15 +16,29 @@ module.exports = function (router, passport) {
             res.redirect('tables');
         }
 
-        var User = require('../models/user');
+        //console.log(req.session.id);
 
-        User.find({},function(e,users){
-            if(e)
-                throw new Error();
-            console.log(users);
-        });
+        /*console.log(req.session.user._id);
 
-        console.log(req.cookies);
+         console.log(req.cookies);*/
+
+
+        /*var User = require('../models/user');
+
+         User.find({},function(e,users){
+         if(e)
+         throw new Error();
+         console.log(users);
+         });
+
+         console.log(req.cookies);*/
+
+        /*        var Map = require('../models/map');
+
+         Map.find({},function(e,maps){
+         if(e) throw new Error;
+         console.log("this is the map " + maps);
+         });*/
 
         res.render('index', {
             title: 'Snooker'
@@ -48,7 +61,7 @@ module.exports = function (router, passport) {
 
         //console.log(req.user);
         //res.end(req.user);
-        console.log(req.user);
+        //console.log(req.user);
 
         if (!req.user) {
             //res.status(403);
@@ -66,7 +79,7 @@ module.exports = function (router, passport) {
         else
             nickname = req.user.local.nickname;
 
-        console.log(req.user.local.cash);
+        //console.log(req.user.local.cash);
 
         //User.update({_id: req.id}, {$set: {'local.cash': 45}});
 
@@ -112,11 +125,12 @@ module.exports = function (router, passport) {
 
     router.get('/logout', function (req, res) {
         req.logout();
-        // req.session.destroy();
+        req.session.destroy();
         res.redirect('/');
     });
     router.post('/logout', function (req, res, next) {
         req.logout();
+        req.session.destroy();
         res.redirect('/');
     });
 
