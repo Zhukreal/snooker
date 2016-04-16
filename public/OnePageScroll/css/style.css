@@ -12,7 +12,7 @@ section {
 
 }
 section:nth-child(2) {
-  background: #4d4dff;
+  background: url(snooker_1.jpg);
 }
 .onepage-pagination li a.active:before {
   border-color: #fff;
