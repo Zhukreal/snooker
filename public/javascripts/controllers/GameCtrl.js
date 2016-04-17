@@ -19,56 +19,50 @@ app.controller('GameController', function ($scope) {
 
     $scope.temp = "temp";
 
-    /*$scope.game = new Phaser.Game(
-     800,600,
-     Phaser.AUTO,
-     'gameCanvas'
-     );*/
-
-    $scope.player1 = {
-        id: 0,
-        name: "annonymus",
-        priority: 0
-    };
-
-    //socket.emit('lol',$scope.player1);
-
-    //socket.emit('connection', function(socket){
-    //socket.emit('clientConnected', $scope.player1);
-
     socket.playerColor = $scope.playerColor();
     socket.roomId = $scope.roomId();
 
+
     $scope.player = {
+        nickname: $scope.nickname,
         id: $scope.playerId,
         color: socket.playerColor,
         room: socket.roomId
     };
 
     socket
+        .on('initPlayer', function (data) {
+            $scope.player.nickname = data.nickName;
+            $scope.player.id = data.playerId;
+            console.log($scope.player);
+            $(document).ready(function () {
+            })
+        })
         .emit('initPlayer', $scope.player)
         .emit('connectToRoom', socket.roomId)
         .on('disconnect', function (socket) {
-            socket.broadcast.to(socket.roomId).emit('user disconnected');
+            //socket.broadcast.to(socket.roomId).emit('user disconnected');
         })
-        .on('leave', function(userName){
+        .on('leave', function (userName) {
             alert(userName + " leave");
         })
-        .on('disconnect', function(){
+        .on('disconnect', function () {
             this.$emit('error');
         })
-        .on('error', function(reason){
+        .on('error', function (reason) {
             if (reason == "handshake unauthorized") {
                 alert("вы вышли из сайта");
             } else {
-                setTimeout(function() {
+                setTimeout(function () {
                     socket.socket.connect();
                 }, 500);
             }
-        });
+        })
+        .on('userCount', function(data){
+            console.log(data.userCount);
+        })
 
-        //socket.join(socket.roomId);
-
+    //socket.join(socket.roomId);
 
     $scope.playerId++;
     //})

@@ -4,10 +4,11 @@ const mongoose = require('mongoose');
 const connect = require('connect'); // npm i connect
 const async = require('async');
 const cookie = require('cookie');   // npm i cookie
-
 const cookieParser = require('cookie-parser');
 var sessionStore = new MongoStore({mongooseConnection: mongoose.connection});
 var User = require('../models/user');//.User;
+const crypto = require('crypto');
+const possport = require('passport');
 
 function loadSession(sid, callback) {
     sessionStore.load(sid, function (err, session) {
@@ -46,30 +47,19 @@ module.exports = function (server) {
 
     const io = require('socket.io').listen(server);
     io.set('origins', 'localhost:*');
-
     console.log('io is being connected');
 
-
     io.set('authorization', function (handshake, callback) {
-
-
         async.waterfall([
             /*function(callback){
-                if(!handshake.headers.cookie)
-                    callback('No cookie transmitted', false);
-            },*/
+             if(!handshake.headers.cookie)
+             callback('No cookie transmitted', false);
+             },*/
             function (callback) {
                 handshake.cookies = cookie.parse(handshake.headers.cookie || '');
-                //console.log(handshake.cookies);
                 var sidCookie = handshake.cookies['connect.sid'];
 
-                //handshake.query.temp = "temp";
-                //console.log(handshake.temp);
 
-                console.log('lol');
-                handshake.cookies.temp = "lol";
-                //console.log(sidCookie)
-                //console.log(sidC);
                 /*
                  var sidTemp = connect.utils.parseSignedCookie(sidC, config.get('session:secret'));
                  console.log(sidTemp);
@@ -85,41 +75,31 @@ module.exports = function (server) {
             function (session, callback) {
                 if (!session) {
                     callback(new Error(401, "No session"));
+                } else {
+                    handshake.session = session;
+                    loadUser(session, callback);
                 }
-                handshake.session = session;
-                //console.log(handshake.session);
-                loadUser(session, callback);
             },
             function (user, callback) {
-
                 if (!user) {
                     callback(new Error(403, "Anonymous session may not connect"));
                 }
-
-                handshake.user = user;
-
-                //io.handshake.user = user;
-
-                //console.log(handshake.user);
-
-                //console.log(handshake.user.local.nickname);
-
-                callback(null, true);
+                else {
+                    handshake.user = user;
+                    callback(null, true);
+                }
             }
 
         ], function (err) {
             if (!err) {
                 return callback(null, true);
             }
-
-            if (err instanceof Error) {
+            else if (err instanceof Error) {
                 return callback(null, false);
+            } else {
+                callback(err);
             }
-
-            callback(err);
         });
-
-        //callback(null, true);
 
     });
 
@@ -152,35 +132,48 @@ module.exports = function (server) {
 
     var player = require('../models/user');
 
+    function randomstring(L) {
+        var s = '';
+        var randomchar = function () {
+            var n = Math.floor(Math.random() * 62);
+            if (n < 10)
+                return n; //1-10
+            if (n < 36)
+                return String.fromCharCode(n + 55); //A-Z
+            return String.fromCharCode(n + 61); //a-z
+        };
+        while (s.length < L)
+            s += randomchar();
+        return s;
+    }
+
+    var userCount = 0;
 
     io.sockets.on('connection', function (socket) {
         console.log("a user connected");
+        userCount++;
+        socket.player = player;
 
-        //console.log()
+        var userName = socket.client.request.user.local.nickname;
 
+        var userId = socket.client.request.user._id;
 
-        var userName = socket.handshake.user.local.nickname;
-
-        console.log(socket.handshake);
-
-        //console.log(userName);
-
-        //console.log(socket.handshake);
-
-        socket.on('initPlayer', function (data) {
-            console.log(data);
-        });
-
-
-        socket.on('connectToRoom', function (room) {
-            socket.join(room);
-
-            //console.log(socket.rooms);
-        });
-
-        socket.on('disconnect', function () {
-            socket.broadcast.emit('leave', userName);
-        })
+        console.log(randomstring(15));
+        //var id = crypto.randomBytes(15).toString('hex');
+        io.sockets.emit('userCount', {userCount: userCount});
+        socket
+            .emit('initPlayer', {
+                nickName: userName,
+                playerId: userId
+            })
+            .on('connectToRoom', function (room) {
+                socket.join(room);
+            })
+            .on('disconnect', function () {
+                userCount--;
+                socket.broadcast.emit('leave', userName);
+                socket.emit('userCount', {userCount: userCount});
+            })
     });
 
 };

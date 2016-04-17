@@ -8,15 +8,25 @@ var userSchema = new mongoose.Schema({
         },
         nickname: {
             type: String,
-            default: ''
+            default: '',
+            unique: true,
+            required: true
         },
         email: {
             type: String,
-            default: ''
+            default: '',
+            index: true,
+            match: [/.+\@.+\..+/, "Please fill a valid e-mail address"]
         },
         password: {
             type: String,
-            default: ''
+            default: '',
+            validate: [
+                function(password){
+                    return password.length >=4;
+                },
+                'Password should be longer'
+            ]
         },
         photo: {
             data: Buffer,

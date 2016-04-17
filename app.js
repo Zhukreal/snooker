@@ -92,7 +92,10 @@ app.use(session({
     secret: 'keyboard cat',
     resave: true,
     saveUninitialized: true,
-    //cookie: { secure: true }
+    cookie: {
+        //secure: true
+        maxAge: 60000
+    },
     store: /*sessionStore*/ new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
