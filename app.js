@@ -100,10 +100,10 @@ app.use(session({
 }));
 
 
-app.use(function(req, res, next){
+app.use(function (req, res, next) {
     var views = req.session.views;
 
-    if(!views)
+    if (!views)
         views = req.session.views = {};
 
     var pathname = parseurl(req).pathname;
@@ -113,7 +113,7 @@ app.use(function(req, res, next){
     next();
 });
 
-app.get('/lol', function(req, res, next){
+app.get('/lol', function (req, res, next) {
     res.send('you viewed this page ' + req.session.views['/lol'] + ' times');
 });
 
@@ -139,7 +139,6 @@ app.use(flash());
 require('./routes/route')(app, passport);
 
 app.use('/users', users);
-
 
 
 // catch 404 and forward to error handler
