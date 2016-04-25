@@ -1,0 +1,9 @@
+
+<link rel="stylesheet" type="text/css" href="style.css">
+<div ng-controller="tablesCtrl" class="wrap">
+  	<div ng-repeat='table in tables' class="tablesInLine">
+			<button type="button">{{table.user_name}}</button>
+			<p>{{table.profile_picture}}</p>
+			<img src="{{table.imageUrl}}"/>
+		</div>
+</div>
