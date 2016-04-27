@@ -17,7 +17,7 @@ section
 	background-color: white
 .active
 	h1
-		animation: slideInFromUp 2s forwards
+		animation: slideInFromRight 2s forwards
 	button
 		animation: slideInFromLeft 2s forwards
 
@@ -30,4 +30,15 @@ section
 	0%
 		margin-left: -100%
 	100%
-		margin-left: 0 		
+		margin-left: 0
+@keyframes slideInFromRight
+	0%
+		margin-right: -100%
+	100%
+		margin-right: 0
+@keyframes slideInFromBottom
+	0%
+		margin-bottom: -100%
+	100%
+		margin-bottom: 0  		
+

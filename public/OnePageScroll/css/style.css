@@ -5,14 +5,11 @@ html {
   font-family: Charcoal CY;
   font-size: 30px;
 }
-
 section {
-  background: #00fe00;
-  background: url(snooker.jpg);
-
+   background: url(snooker.jpg);
 }
 section:nth-child(2) {
-  background: url(snooker_1.jpg);
+  background: #298A08;
 }
 .onepage-pagination li a.active:before {
   border-color: #fff;
@@ -20,11 +17,23 @@ section:nth-child(2) {
 .onepage-pagination li a:before {
   background-color: #fff;
 }
-.active h1 {
-  -webkit-animation: slideInFromUp 2s forwards;
-          animation: slideInFromUp 2s forwards;
+.active #lol1{
+  -webkit-animation: slideInFromRight 2s forwards;
+          animation: slideInFromRight 2s forwards;
+}
+.active #lol2{
+  -webkit-animation: slideInFromRight 2s forwards;
+          animation: slideInFromRight 2s forwards;
 }
 .active button {
+  -webkit-animation: slideInFromLeft 2s forwards;
+          animation: slideInFromLeft 2s forwards;
+}
+.active #lol3 {
+  -webkit-animation: slideInFromLeft 2s forwards;
+          animation: slideInFromLeft 2s forwards;
+}
+.active #lol4 {
   -webkit-animation: slideInFromLeft 2s forwards;
           animation: slideInFromLeft 2s forwards;
 }
@@ -49,7 +58,7 @@ section:nth-child(2) {
     margin-left: -100%;
   }
   100% {
-    margin-left: 0;
+    margin-left: 2%;
   }
 }
 @keyframes slideInFromLeft {
@@ -57,7 +66,39 @@ section:nth-child(2) {
     margin-left: -100%;
   }
   100% {
-    margin-left: 0;
+    margin-left: 2%;
+  }
+}
+@-webkit-keyframes slideInFromRight {
+  0% {
+    margin-right: -100%;
+  }
+  100% {
+    margin-right: 2%;
+  }
+}
+@keyframes slideInFromRight {
+  0% {
+    margin-right: -100%;
+  }
+  100% {
+    margin-right: 2%;
+  }
+}
+@-webkit-keyframes slideInFromBottom {
+  0% {
+    margin-bottom: -100%;
+  }
+  100% {
+    margin-bottom: 0;
+  }
+}
+@keyframes slideInFromBottom {
+  0% {
+    margin-bottom: -100%;
+  }
+  100% {
+    margin-bottom: 0;
   }
 }
 .button{
@@ -90,3 +131,53 @@ position: relative;
  transform: scale(0.93);
  color: #fff;
   }
+
+.plaxBall img {
+ width:400px;
+ height:400px;
+}
+.jumbotro{
+  font-size:30px;
+  color:white;
+  padding:6px;
+}
+.jumbotro:hover{
+  text-decoration: underline;
+}
+
+#lol1{
+  margin-left:70%;
+  margin-top:25%;
+  border:5px solid white;
+
+}
+#lol2{
+  margin-top: 1%;
+  margin-left:70%;
+  border:5px solid white;
+}
+#lol3{
+  margin-left:0%;
+ margin-right:70%;
+ border:5px solid white;
+
+  
+}
+#lol4{
+  margin-right:70%;
+  border:5px solid white;
+
+}
+ 
+ #center {
+  top: 50%; 
+  left: 50%;
+  width: 450px; 
+  height: 450px;
+  position: absolute;
+  margin-top: -200px; 
+  margin-left: -200px; 
+}
+ 
+    
+
