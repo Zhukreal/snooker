@@ -41,11 +41,6 @@ body {
     margin: 0 auto;
     overflow: hidden;
 }
-
-a {
-    text-decoration: none;
-}
-
 .main {
     float: left;
     width: 100%;
@@ -181,3 +176,17 @@ img#ball {
     left: 453px;
 }
 
+.wrap{
+    display: flex;
+    justify-content:center;
+    align-content:center;
+}
+
+a.play_game{
+
+}
+
+pre.table_cn{
+    display: flex;
+    justify-content: center;
+}

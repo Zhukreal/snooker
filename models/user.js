@@ -2,10 +2,10 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 
 var userSchema = new mongoose.Schema({
-    local: {
+    local: {/*
         id:{
             type: String
-        },
+        },*/
         nickname: {
             type: String,
             default: '',
@@ -43,7 +43,11 @@ var userSchema = new mongoose.Schema({
         mapId:{
             type: Number,
             default: -1
-        }
+        }/*,
+        color:{
+            type:String,
+            default: "blue"
+        }*/
     },
     facebook: {
         id: String,

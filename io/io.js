@@ -1,12 +1,16 @@
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
-const connect = require('connect'); // npm i connect
+const connect = require('connect');
 const async = require('async');
-const cookie = require('cookie');   // npm i cookie
+const cookie = require('cookie');
 const cookieParser = require('cookie-parser');
 var sessionStore = new MongoStore({mongooseConnection: mongoose.connection});
-var User = require('../models/user');//.User;
+
+var User = require('../models/user');
+var player = require('../models/user');
+var Room = require('../models/room');
+
 const crypto = require('crypto');
 
 function loadSession(sid, callback) {
@@ -21,24 +25,23 @@ function loadSession(sid, callback) {
 
 function loadUser(session, callback) {
     if (!session.user) {
-        //console.log/*log/ger/.debug*/("Session %s is anonymous", session.id);
+        console.log/*log/ger/.debug*/("Session %s is anonymous", session.id);
         return callback(null, null);
+    } else {
+        console.log/*log/ger/.debug*/("retrieving user ", session.user._id);
+
+        User.findById(session.user._id, function (err, user) {
+            if (err) {
+                //console.log(session.user._id);
+                return callback(err);
+            }
+            if (!user) {
+                return callback(null, null);
+            }
+            //console.log/*log.debug*/("user findbyId result: " + user);
+            callback(null, user);
+        });
     }
-    //console.log/*log/ger/.debug*/("retrieving user ", session.user);
-
-    User.findById(session.user._id, function (err, user) {
-        if (err) {
-            //console.log(session.user._id);
-            return callback(err);
-        }
-
-        if (!user) {
-            return callback(null, null);
-        }
-        //console.log/*log.debug*/("user findbyId result: " + user);
-        callback(null, user);
-    });
-
 }
 
 
@@ -46,7 +49,6 @@ module.exports = function (server) {
 
     const io = require('socket.io').listen(server);
     io.set('origins', 'localhost:*');
-
 
     console.log('io is being connected');
 
@@ -70,7 +72,7 @@ module.exports = function (server) {
                  var sid = connect.utils.parseSignedCookie(sidCookie, config.get('session:secret'));*/
 
                 var sid = cookieParser.signedCookie(sidCookie, 'keyboard cat');
-                console.log(sid);
+                console.log("Session ID : ", sid);
                 loadSession(sid, callback);
             },
             function (session, callback) {
@@ -130,9 +132,6 @@ module.exports = function (server) {
 
     });
 
-
-    var player = require('../models/user');
-
     function randomString(L) {
         var s = '';
         var randomChar = function () {
@@ -153,26 +152,40 @@ module.exports = function (server) {
         return randomString(15);
     }
 
-    var userCount = 0;
 
-    var maxCountOfPlayers = 2;
 
-    var rooms = [];
     var roomId = generateRoom();
 
     io.sockets.on('connection', function (socket) {
+
+        var userCount = 0;
+        socket.usetCount = userCount;
         userCount++;
+
         socket.player = player;
+
         var userName = socket.client.request.user.local.nickname;
         console.log("a user %s connected", userName);
         var userId = socket.client.request.user._id;
+
+
+        //console.log(socket.client.request)
         socket.room = roomId;
 
         //console.log(generateRoom(15));
         //var id = crypto.randomBytes(15).toString('hex');
+
+
+
+        Room.count({}, function (err, cnt) {
+            if (err)
+                throw err;
+            console.log("count of rooms : ",cnt);
+        });
+
+
+        //console.log("Another count of rooms ", tempCount)
         io.sockets.emit('userCount', {userCount: userCount});
-
-
         socket
             .emit('initPlayer', {
                 nickName: userName,
@@ -183,7 +196,13 @@ module.exports = function (server) {
              socket*/.join(roomId, function (err) {
                 if (!err) {
                     rooms = socket.rooms;
-                    console.log(rooms);
+
+
+
+                    //console.log(rooms);
+
+
+
                     io.sockets['in'](roomId).emit('joinedToRoom', {
                         'text': 'Player ' + userName + ' has joined into the game'
                     });
@@ -191,6 +210,7 @@ module.exports = function (server) {
                     console.log(err, e);
                 }
             })
+            //.emit('countOfUsers', {countOfUsers: tempCount})
             /*})*/
             .on('leave', function (roomId) {
                 socket.leave(roomId);
@@ -212,6 +232,13 @@ module.exports = function (server) {
                 socket.broadcast.emit('leave', userName);
                 socket.emit('userCount', {userCount: userCount});
             })
+
+        /*
+         socket.emit('count', {
+         count: Object.keys(io.sockets.connected).length
+         });
+         });*/
+
     });
 
 };

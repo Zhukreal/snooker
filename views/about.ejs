@@ -1,25 +1,22 @@
-<!--
 <!DOCTYPE html>
-<html lang="en" ng-app="sampleApp">
+<html lang="en" ng-app="AboutCtrl">
 <head>
-    <title><#%= title %#></title>
+    <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/vendor/bower_components/angular/angular.min.js"></script>
+    <script src="/javascripts/controllers/AboutCtrl.js"></script>
 </head>
 <body>
 <header>
-    <%# include ./partials/header %>
+
 </header>
 <div class="wrapper" ng-controller="AboutController">
     <h1>About page</h1>
-    <p>Welcome to <#%= title %#></p>
+    <p>Welcome to <%= title %></p>
     <pre>{{someAboutInfo}}</pre>
 </div>
 <footer>
-    <%# include ./partials/footer %>
+
 </footer>
 </body>
 </html>
--->
-<pre>
-    {{someAboutInfo}}
-</pre>

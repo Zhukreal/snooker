@@ -3,6 +3,7 @@ var HttpError = require('../error/HttpError').HttpError;
 var multer = require('multer');
 var path = require('path');
 //var checkAuth = require('../middleware/checkAuth');
+var createRoom = require("../middleware/createRoom");
 
 module.exports = function (router, passport) {
 
@@ -10,7 +11,6 @@ module.exports = function (router, passport) {
         console.log('Time: ', Date.now());
         next();
     });
-
     router.get('/', function (req, res, next) {
         if (req.isAuthenticated()) {
             res.redirect('tables');
@@ -46,23 +46,25 @@ module.exports = function (router, passport) {
     });
 
     router.get('/about', function (req, res, next) {
+        console.log("req.session: ", req.session);
         res.render('about', {
             title: 'About page'
         });
     });
 
 
-    router.get('/game', function (req, res, next) {
-        res.render('game');
+    router.get('/game/:id', createRoom, require('../middleware/loadRoom'), function (req, res, next) {
+        if (req.user) {
+            console.log(req.room)
+            res.render('game');
+        } else {
+            res.redirect('/');
+        }
+
     });
 
 
     router.get('/tables', function (req, res, next) {
-
-        //console.log(req.user);
-        //res.end(req.user);
-        //console.log(req.user);
-
         if (!req.user) {
             //res.status(403);
             //res.redirect('503');
@@ -83,13 +85,29 @@ module.exports = function (router, passport) {
 
         //User.update({_id: req.id}, {$set: {'local.cash': 45}});
 
+        var rnd = randomString(15);
+
+        function randomString(L) {
+            var s = '';
+            var randomChar = function () {
+                var n = Math.floor(Math.random() * 62);
+                if (n < 10)
+                    return n; //1-10
+                if (n < 36)
+                    return String.fromCharCode(n + 55); //A-Z
+                return String.fromCharCode(n + 61); //a-z
+            };
+            while (s.length < L)
+                s += randomChar();
+            return s;
+        }
+
 
         res.render('tables', {
             userID: req.user,
             userName: nickname,
-            userPhoto: req.user.local.photo.data/*,
-             userInfo: req.user.local.photo*/
-            //temp : req.user.local.photo
+            userPhoto: req.user.local.photo.data,
+            roomId: rnd
         });
     });
 
@@ -113,9 +131,6 @@ module.exports = function (router, passport) {
     });
 
     router.get('/profile/:id', isLoggedIn, function (req, res, next) {
-
-        //console.log(req.params.id);
-
         res.render('profile', {
             user: req.user,
             userPhoto: req.user.local.photo.data

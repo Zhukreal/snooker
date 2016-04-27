@@ -7,7 +7,6 @@ var User = require('../models/user');
 
 var configAuth = require('./auth');
 
-
 module.exports = function (passport) {
 
     passport.serializeUser(function (user, done) {
@@ -43,8 +42,7 @@ module.exports = function (passport) {
                         newUser.local.password = newUser.generateHash(password);
                         newUser.local.nickname = req.body.nickname;
                         newUser.local.photo.data = req.body.file;
-                        //newUser.local.photo.contentType = req.body.
-                        //console.log(req.file);
+
                         newUser.save(function (err) {
                             if (err)
                                 throw err;
