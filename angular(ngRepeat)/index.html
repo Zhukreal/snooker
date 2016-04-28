@@ -15,13 +15,29 @@
 	<body ng-controller="tablesCtrl">
 		<div>
 			<a href="#/tables">Список игровых комнат</a>
-			<div ng-view>
-			</div>
+		
 
 		</div>
+		<nav>
+			<ul>
+	
+				<li>
+					<a 	href="#/table_{{count}}" 	
+							ng-click="pageprev()"> 
+						prev
+					</a>
+				</li>
+				<li>
+					<a 	href="#/table_{{count}}"  	
+							ng-click="pagenext()">
+						next
+					</a>
+				</li>
 
+			</ul>
+		</nav>
 
-
+	<div ng-view></div>
 
 	</body>
 </html>
