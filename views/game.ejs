@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" >
 <head>
     <title>PlayGame</title>
     <meta charset='utf-8'/>
@@ -7,14 +7,14 @@
     <script src="/vendor/bower_components/socket.io-client/socket.io.js"></script>
     <script src="/vendor/bower_components/jquery/jquery.min.js"></script>
 </head>
-<body ng-app="GameApp" ng-controller="GameController">
+<body ng-app="GameApp" style="width: 100%" ng-controller="GameController">
 
 <pre>{{temp}}</pre>
 <pre>{{player.nickname}}</pre>
 
-<pre class="table_sn">
+<div class="table_sn" id="snooker" style="width:1400px; height:700px; display:block; margin: 0px auto;">
     <canvas id="myCanvas"></canvas>
-</pre>
+</div>
 
 
 </body>

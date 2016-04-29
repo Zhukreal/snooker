@@ -1,6 +1,6 @@
 var app = angular.module('GameApp', []);
 
-app.controller('GameController', function ($scope) {
+app.controller('GameController', function ($scope, $log) {
     $(document).ready(function () {
 
         $scope.canvas = document.getElementById("myCanvas");
@@ -10,11 +10,28 @@ app.controller('GameController', function ($scope) {
         $scope.canvas.height = 700;
 
         $scope.background = new Image();
-        $scope.ball = new Image();
+        $scope.ball = document.createElement('img');
+        $scope.ball.setAttribute('src', '../images/_ball.png');
+        $scope.ball.setAttribute('id', 'ball');
+        $scope.ball.style.top="390px";
+        $scope.ball.style.left="490px";
+        document.getElementById("snooker").appendChild($scope.ball);
+
+        $scope.cue = document.createElement('img');
+        $scope.cue.setAttribute('src', '../images/cue-0.png');
+        $scope.cue.setAttribute('id', 'cue');
+        $scope.cue.style.top="390px";
+        $scope.cue.style.left="490px";
+        $scope.cue.style.width="900px";
+        $scope.cue.style.height="20px";
+        $scope.cue.style.position ="absolute";
+        
+        document.getElementById("snooker").appendChild($scope.cue);
+        
 
         $scope.background.src = "../images/playerTable.png";
-        $scope.ball.src = '../images/_ball.png';
-
+        /*$scope.ball.src = '../images/_ball.png';*/
+        
         $scope.background.style.position = "relative";
         $scope.background.style.zIndex = 2;
         $scope.ballHeigh = 40;
@@ -23,6 +40,7 @@ app.controller('GameController', function ($scope) {
         $scope.ballRadius = 10;
         $scope.x = $scope.canvas.width*1/5;
         $scope.y = $scope.canvas.height/2 - 18;
+
         $scope.dx = 2;
         $scope.dy = -2;
 
@@ -30,10 +48,11 @@ app.controller('GameController', function ($scope) {
         $scope.background.onload = function () {
             $scope.ctx.drawImage($scope.background, 0, 0);
         };
+        /*
         $scope.ball.onload = function () {
             $scope.ctx.drawImage($scope.ball, $scope.x, $scope.y, $scope.ballHeigh, $scope.ballWidth);
         };
-
+*/
         $scope.init = function () {
 
 
@@ -49,13 +68,21 @@ app.controller('GameController', function ($scope) {
          }
          };*/
 
-        $scope.drawBall = function () {
+        var drawBall = function () {
             $scope.ctx.beginPath();
             $scope.ctx.arc($scope.x, $scope.y, $scope.ballRadius, 0, Math.PI * 2);
             $scope.ctx.fillStyle = "#0095DD";
             $scope.ctx.fill();
             $scope.ctx.closePath();
         };
+/*
+        $scope.drawCue = function() {
+            $scope.ctx.beginPath();
+            $scope.ctx.;
+            $scope.ctx.fillStyle = "#0095DD";
+            $scope.ctx.fill();
+            $scope.ctx.closePath();  
+        }*/
 
         /*$scope.drawPaddle = function(){
          $scope.ctx.beginPath();
@@ -67,7 +94,7 @@ app.controller('GameController', function ($scope) {
 
         $scope.draw = function () {
             $scope.ctx.clearRect(0, 0, $scope.canvas.width, $scope.canvas.height);
-            $scope.drawBall();
+            //$scope.drawBall();
             //$scope.drawPaddle();
             //window.requestAnimationFrame($scope.draw)
         };
@@ -75,17 +102,124 @@ app.controller('GameController', function ($scope) {
         /*$scope.draw();*/
         $scope.init();
 
+        $scope.canvas.onclick = function(e) {
+            console.log(e);
+        }
 
 
 
 
+        var canvas=$scope.canvas;
+        console.log(canvas.style);
+        function getCoords(elem) {
+
+          var box = elem.getBoundingClientRect();
+
+          var body = document.body;
+          var docEl = document.documentElement;
+
+          var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+          var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+          var clientTop = docEl.clientTop || body.clientTop || 0;
+          var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+          var top = box.top + scrollTop - clientTop;
+          var left = box.left + scrollLeft - clientLeft;
+
+          return {
+            top: parseInt(top),
+            left: parseInt(left)
+          };
+        }
+        
+
+        $scope.rotateCue = function(e) {
+            var canvasCoords = getCoords($scope.canvas);
+
+            var ballCoords = getCoords($scope.ball);
+
+            var x = e.pageX - canvasCoords.left;
+            var y = e.pageY - canvasCoords.top;
+            console.log('X: ', x, 'Y: ', y);
+
+            
+            var ballX = ballCoords.left;
+            var ballY = ballCoords.top; 
+            var alpha = Math.atan( (ballY - y)/(ballX - x) );
+
+            $scope.cue.style.transform = 'rotate(' + (-alpha*57) + 'deg)';
+
+            //console.log(ballX);
+            $scope.cue.style.left = (ballX-430) + 'px'; 
+            $scope.cue.style.top = ballY + 'px';
+            //console.log($scope.cue.style.left);
+/*
+            console.log('ballCoords', {x: ballX, y: ballY});
+            console.log('x ang y', {x: x, y: y} );
+            console.log('cue coords', { x: $scope.cue.style.left, y: $scope.cue.style.top } );*/
+            /*var transform = 'rotate(75 deg)';
+            $scope.cue.style.webkitTransform = transform;
+            $scope.cue.style.mozTransform = transform;
+            $scope.cue.style.msTransform = transform;
+            $scope.cue.style.oTransform = transform;*/
+        }
+
+        var ball = $scope.ball;
+        var ballCoords = getCoords($scope.ball);
+        var ballX = ballCoords.left;
+        var ballY = ballCoords.top; 
+        $scope.cue.style.left = (ballX-430) + 'px'; 
+        $scope.cue.style.top = (ballY) + 'px';
+
+        ball.onmousedown = function(e) { // 1. отследить нажатие
+            ball.style.position = 'absolute';
+            moveAt(e);
+            document.getElementById("snooker").appendChild(ball);
+            ball.style.zIndex = 1000; 
+            function moveAt(e) {
+
+                if ((e.pageX - ball.offsetWidth / 2) > 387 && (e.pageX - ball.offsetWidth / 2) < 1599 && (e.pageY - ball.offsetHeight / 2) > 129 && (e.pageY - ball.offsetHeight / 2) < 647 ) {
+                    ball.style.left = e.pageX - ball.offsetWidth / 2 + 'px';
+                    ball.style.top = e.pageY - ball.offsetHeight / 2 + 'px';
+
+                    //console.log('Canvas: ');
+                    //console.log('X : ', , 'Y : ', );
+                    //console.log('Ball: ');
+                    //console.log('X : ', ball.style.left, 'Y : ', ball.style.top);
+                }
+            }
+
+            document.onmousemove = function(e) {
+                $scope.cue.style.display = "none";
+                moveAt(e);
+            }
+
+            ball.onmouseup = function() {
+                console.log('Ball onmouse up');
+                document.onmousemove = null;
+                ball.onmouseup = null;
+                $scope.cue.style.display = "block";
+                
+
+                var ballCoords = getCoords($scope.ball);
+                var ballX = ballCoords.left;
+                var ballY = ballCoords.top; 
+                $scope.cue.style.left = (ballX-450) + 'px'; 
+                $scope.cue.style.top = (ballY-20) + 'px';
+
+                document.onmousemove = $scope.rotateCue;
+            }
+        }
+
+        ball.ondragstart = function() {
+            return false;
+        }
 
 
 
 
-
-
-
+        document.onmousemove = $scope.rotateCue;
 
 
 
@@ -172,7 +306,7 @@ app.controller('GameController', function ($scope) {
                 alert(userName + " leave");
             })
             .on('disconnect', function () {
-                this.$emit('error');
+                //$scope.$emit('error');
             })
             .on('error', function (reason) {
                 if (reason == "handshake unauthorized") {

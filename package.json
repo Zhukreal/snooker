@@ -37,6 +37,7 @@
     "url": "https://github.com/courework-snooker/snooker"
   },
   "dependencies": {
+    "phaser.io":"~2.4.6",
     "async": "latest",
     "bcrypt-nodejs": "latest",
     "body-parser": "~1.13.2",
