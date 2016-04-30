@@ -258,15 +258,21 @@ footer {
         width: -webkit-calc(100% / 5);
         width: calc(100% / 5);
     }
+
     @media screen and (max-width: 945px) {
         .cbp-rfgrid li {
             width: 25%;
             width: -webkit-calc(100% / 4);
             width: calc(100% / 4);
         }
+
         @media screen and (max-width: 660px) {
             .cbp-rfgrid li {
                 width: 33.3333333%;
                 width: -webkit-calc(100% / 3);
                 width: calc(100% / 3);
             }
+        }
+    }
+}
+
