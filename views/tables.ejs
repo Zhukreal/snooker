@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Tables</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <!--<link rel="stylesheet" href="/stylesheets/style.css">-->
+
     <link rel="stylesheet" href="/vendor/bower_components/bootstrap/dist/css/bootstrap.css">
     <script src="/vendor/bower_components/socket.io-client/socket.io.js"></script>
     <script src="/vendor/bower_components/jquery/jquery.min.js"></script>
     <script src="/vendor/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/vendor/bower_components/angular/angular.min.js"></script>
     <script src="/javascripts/controllers/TableCtrl.js"></script>
+    <link rel="stylesheet" href="/stylesheets/tableStyle.css">
 </head>
 <body ng-controller="TableCtrl">
 <header>
@@ -17,7 +19,7 @@
         <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
-            <li><a href="/game">Play Game</a></li>
+            <li><a href="/game/<%= roomId %>">Play Game</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <% if (userID){ %>
@@ -48,13 +50,13 @@
 
 </header>
 
-<pre class="wrap">
+<!--<pre class="wrap">
     <pre>
         {{hello}}
     </pre>
-    <!--<img src="images/ball.png" alt="">-->
+    &lt;!&ndash;<img src="images/ball.png" alt="">&ndash;&gt;
     <div class="table">
-        <a href="/game/<%= roomId %>" class="play_game">
+        <a href="/game/<#%= roomId %#>" class="play_game">
             <img src="/images/start_table.png" alt="" height="200px" width=""/>
         </a>
     </div>
@@ -73,8 +75,23 @@
             <img src="/images/table.png" alt="" height="200px" width=""/>
         </a>
     </div>
-</pre>
+</pre>-->
 
+<div class="wrapper">
+
+    <div class="online_users">
+        <div class="online_users_text">
+            <p>Users online :</p>
+        </div>
+        <div class="online_users_count">
+            <div class="online_users_count_inner">
+                <div class="lol">{{uCount}}</div>
+                <!-- <p class="online_inner_text">42</p> -->
+            </div>
+        </div>
+    </div>
+
+</div>
 
 </body>
 </html>
