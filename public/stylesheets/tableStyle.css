@@ -20,7 +20,7 @@ nav.navbar-default{
     margin-right:15px;
 }
 nav.navbar-default ul.navbar-nav > li a {
-    color: #D2D2D6;
+    color: #FF9405;
 }
 nav.navbar-default ul.navbar-nav > li a:hover{
     color: #f0ad4e;
@@ -70,4 +70,20 @@ p.online_inner_text{
     height: 1.55555556em;
     margin:30px 38px 38px 40px;
     color: #fff;
+}
+
+.dropdown-menu{
+  background-color: transparent;
+}
+.dropdown-menu .devider{
+  background-color: #5F8B12;
+}
+.navbar-default .navbar-nav > li > a{
+
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus{
+  background-color: transparent !important;
+  color: #f0ad4e;
 }

@@ -2,8 +2,8 @@
 <html lang="en-US">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/styles.css">
-    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/profileStyle.css">
+    <script type="text/javascript" src="../vendor/bower_components/jquery/jquery.min.js"></script>
 </head>
 
 <body>
@@ -21,7 +21,8 @@
                 <li><a href="#activity">Statistics</a></li>
                 <li><a href="#friends">Friends</a></li>
                 <li><a href="#settings">Settings</a></li>
-                <li><a href="/logout">logout</a></li>
+                <li><a href=""
+                       onclick="$('<form method=POST action=/logout>').appendTo('body').submit();return false">Log out</a></form></li>
             </ul>
         </nav>
 
@@ -52,7 +53,7 @@
         <section id="settings" class="hidden">
             <p>Edit your user settings:</p>
 
-            <p class="setting"><span>E-mail Address <img src="images/edit.png" alt="*Edit*"></span> lolno@gmail.com</p>
+            <p class="setting"><span>E-mail Address <img src="../images/edit.png" alt="*Edit*"></span> lolno@gmail.com</p>
 
             <p class="setting"><span>Language <img src="images/edit.png" alt="*Edit*"></span> English(US)</p>
 
