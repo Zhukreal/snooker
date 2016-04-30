@@ -21,8 +21,8 @@ app.controller('GameController', function ($scope) {
         $scope.ballWidth = 40;
 
         $scope.ballRadius = 10;
-        $scope.x = $scope.canvas.width*1/5;
-        $scope.y = $scope.canvas.height/2 - 18;
+        $scope.x = $scope.canvas.width * 1 / 5;
+        $scope.y = $scope.canvas.height / 2 - 18;
         $scope.dx = 2;
         $scope.dy = -2;
 
@@ -76,36 +76,6 @@ app.controller('GameController', function ($scope) {
         $scope.init();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         $scope.playerId = 0;
 
         $scope.playerColor = function () {
@@ -115,6 +85,7 @@ app.controller('GameController', function ($scope) {
         $scope.roomId = function () {
             return "room" + Math.floor($scope.playerId / 2);
         };
+
 
         var socket = io.connect('/', {
             //'reconnection delay': 1
@@ -133,9 +104,72 @@ app.controller('GameController', function ($scope) {
             color: socket.playerColor,
             room: socket.roomId
         };
+
+
         $scope.uCount = 0;
 
+
+        class Snooker {
+
+
+            init() {
+
+            }
+
+            startGame(gameId, turn) {
+
+            }
+
+            mask(state) {
+
+            }
+
+            move(id, turn, win) {
+
+            }
+
+            endGame(turn, win) {
+
+            }
+
+
+            constructor() {
+
+            }
+
+        }
+
+
         socket
+            .on('connect', function () {
+                console.log("You\'ve been connected successfully");
+            })
+            .on('reconnect', function () {
+                console.log("You\'ve been reconnected");
+            })
+            .on('reconnecting', function () {
+                console.log("Wait.You\'re reconnecting");
+            })
+            .on('wait', function () {
+                $("body").append("<pre>Waiting for the opponent...</pre>");
+            })
+            .on('exit', function () {
+                Snooker.endGame(Snooker.turn, 'exit');
+            })
+            .on('leave', function (userName) {
+                alert(userName + " leave");
+            })
+            .on('userCount', function (data) {
+                $scope.uCount = data.userCount;
+                $scope.$apply();
+                console.log("count of users ", data.userCount);
+            })
+
+            .on('ready', function (gameId, turn, opponent) {
+                console.log("player" + opponent + "connected" + (turn == 1 ? "Your xod" : "Opponent xod"));
+            })
+
+
             .on('initPlayer', function (data) {
                 $scope.player.nickname = data.nickName;
                 $scope.player.id = data.playerId;
@@ -147,7 +181,7 @@ app.controller('GameController', function ($scope) {
 
             })
             .emit('initPlayer', $scope.player)
-            .emit('addPlayerIntoATable',$scope.player)
+            .emit('addPlayerIntoATable', $scope.player)
             .on('message', function (data) {
                 //if(socket.userCount)
                 //alert($scope.uCount);
@@ -162,17 +196,18 @@ app.controller('GameController', function ($scope) {
                 console.log(data);
                 $("body").append(data);
             })
-            .on('countOfUsers', function(data){
+            .on('countOfUsers', function (data) {
                 console.log(data);
             })
-            .on('disconnect', function (socket) {
+            /*.on('numberOfRooms',function(data){
+             console.log(data);
+             })*/
+            /*.on('disconnect', function (socket) {
                 //socket.broadcast.to(socket.roomId).emit('user disconnected');
-            })
-            .on('leave', function (userName) {
-                alert(userName + " leave");
-            })
+            })*/
+
             .on('disconnect', function () {
-                this.$emit('error');
+                socket.emit('error');
             })
             .on('error', function (reason) {
                 if (reason == "handshake unauthorized") {
@@ -183,11 +218,7 @@ app.controller('GameController', function ($scope) {
                     }, 500);
                 }
             })
-            .on('userCount', function (data) {
-                $scope.uCount = data.userCount;
-                $scope.$apply();
-                console.log(data.userCount);
-            })
+
 
         //socket.join(socket.roomId);
 

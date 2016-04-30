@@ -15,31 +15,6 @@ module.exports = function (router, passport) {
         if (req.isAuthenticated()) {
             res.redirect('tables');
         }
-
-        //console.log(req.session.id);
-
-        /*console.log(req.session.user._id);
-
-         console.log(req.cookies);*/
-
-
-        /*var User = require('../models/user');
-
-         User.find({},function(e,users){
-         if(e)
-         throw new Error();
-         console.log(users);
-         });
-
-         console.log(req.cookies);*/
-
-        /*        var Map = require('../models/map');
-
-         Map.find({},function(e,maps){
-         if(e) throw new Error;
-         console.log("this is the map " + maps);
-         });*/
-
         res.render('index', {
             title: 'Snooker'
         });
@@ -53,9 +28,10 @@ module.exports = function (router, passport) {
     });
 
 
-    router.get('/game/:id', createRoom, require('../middleware/loadRoom'), function (req, res, next) {
+    router.get('/game/:id', createRoom, /*require('../middleware/loadRoom'),*/ function (req, res, next) {
         if (req.user) {
-            console.log(req.room)
+
+            //req.session.room = createRoom.
             res.render('game');
         } else {
             res.redirect('/');
@@ -85,38 +61,16 @@ module.exports = function (router, passport) {
 
         //User.update({_id: req.id}, {$set: {'local.cash': 45}});
 
-        var rnd = randomString(15);
-
-        function randomString(L) {
-            var s = '';
-            var randomChar = function () {
-                var n = Math.floor(Math.random() * 62);
-                if (n < 10)
-                    return n; //1-10
-                if (n < 36)
-                    return String.fromCharCode(n + 55); //A-Z
-                return String.fromCharCode(n + 61); //a-z
-            };
-            while (s.length < L)
-                s += randomChar();
-            return s;
-        }
-
+        //req.session.table = "table";
 
         res.render('tables', {
             userID: req.user,
             userName: nickname,
             userPhoto: req.user.local.photo.data,
-            roomId: rnd
+            roomId: randomString(15)
         });
     });
 
-    /*function (req, res, next) {
-     /*console.log(req.file);
-     res.end();
-     sdkj
-     User.update({_id: req.id}, {$set: {'local.cash': 45}});
-     },*/
     router.get('/login', function (req, res, next) {
         res.render('login', {
             message: req.flash('loginMessage')
@@ -155,6 +109,21 @@ module.exports = function (router, passport) {
             return next();
         else
             res.redirect('/');
+    }
+
+    function randomString(L) {
+        var s = '';
+        var randomChar = function () {
+            var n = Math.floor(Math.random() * 62);
+            if (n < 10)
+                return n; //1-10
+            if (n < 36)
+                return String.fromCharCode(n + 55); //A-Z
+            return String.fromCharCode(n + 61); //a-z
+        };
+        while (s.length < L)
+            s += randomChar();
+        return s;
     }
 
     var storage = multer.diskStorage({

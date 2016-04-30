@@ -1,0 +1,183 @@
+@import 'styles.css';
+html {
+    color: #fff;
+    text-align: center;
+    font-family: Charcoal CY;
+    font-size: 30px;
+}
+section.page1{
+    background: url("../images/snooker.jpg");
+}
+section:nth-child(2) {
+    background: #298A08;
+}
+.onepage-pagination li a.active:before {
+    border-color: #fff;
+}
+.onepage-pagination li a:before {
+    background-color: #fff;
+}
+.active #lol1{
+    -webkit-animation: slideInFromRight 2s forwards;
+    animation: slideInFromRight 2s forwards;
+}
+.active #lol2{
+    -webkit-animation: slideInFromRight 2s forwards;
+    animation: slideInFromRight 2s forwards;
+}
+.active button {
+    -webkit-animation: slideInFromLeft 2s forwards;
+    animation: slideInFromLeft 2s forwards;
+}
+.active #lol3 {
+    -webkit-animation: slideInFromLeft 2s forwards;
+    animation: slideInFromLeft 2s forwards;
+}
+.active #lol4 {
+    -webkit-animation: slideInFromLeft 2s forwards;
+    animation: slideInFromLeft 2s forwards;
+}
+@-webkit-keyframes slideInFromUp {
+    0% {
+        margin-top: -100%;
+    }
+    100% {
+        margin-top: 0;
+    }
+}
+@keyframes slideInFromUp {
+    0% {
+        margin-top: -100%;
+    }
+    100% {
+        margin-top: 0;
+    }
+}
+@-webkit-keyframes slideInFromLeft {
+    0% {
+        margin-left: -100%;
+    }
+    100% {
+        margin-left: 2%;
+    }
+}
+@keyframes slideInFromLeft {
+    0% {
+        margin-left: -100%;
+    }
+    100% {
+        margin-left: 2%;
+    }
+}
+@-webkit-keyframes slideInFromRight {
+    0% {
+        margin-right: -100%;
+    }
+    100% {
+        margin-right: 2%;
+    }
+}
+@keyframes slideInFromRight {
+    0% {
+        margin-right: -100%;
+    }
+    100% {
+        margin-right: 2%;
+    }
+}
+@-webkit-keyframes slideInFromBottom {
+    0% {
+        margin-bottom: -100%;
+    }
+    100% {
+        margin-bottom: 0;
+    }
+}
+@keyframes slideInFromBottom {
+    0% {
+        margin-bottom: -100%;
+    }
+    100% {
+        margin-bottom: 0;
+    }
+}
+.button{
+    color: white;
+    background-color: transparent;
+    position: absolute;
+    border-radius: 3px;
+    border-width: 2px;
+    border-color: white;
+    width: 300px;
+    height: 100px;
+    display: inline-block;
+    font-size: 50px;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+
+}
+.button.effect{
+    -webkit-transition: -webkit-transform ease-out 0.1s;
+    -moz-transition: -moz-transform ease-out 0.1s;
+    transition: transform ease-out 0.1s;
+}
+
+.button.effect:hover{
+
+    -webkit-transform: scale(0.93);
+    -moz-transform: scale(0.93);
+    -ms-transform: scale(0.93);
+    transform: scale(0.93);
+    color: #fff;
+}
+
+.plaxBall img {
+    width:400px;
+    height:400px;
+}
+.jumbotro{
+    font-size:30px;
+    color:white;
+    padding:6px;
+}
+.jumbotro:hover{
+    text-decoration: underline;
+}
+
+#lol1{
+    margin-left:70%;
+    margin-top:25%;
+    border:5px solid white;
+
+}
+#lol2{
+    margin-top: 1%;
+    margin-left:70%;
+    border:5px solid white;
+}
+#lol3{
+    margin-left:0%;
+    margin-right:70%;
+    border:5px solid white;
+
+
+}
+#lol4{
+    margin-right:70%;
+    border:5px solid white;
+
+}
+
+#center {
+    top: 50%;
+    left: 50%;
+    width: 450px;
+    height: 450px;
+    position: absolute;
+    margin-top: -200px;
+    margin-left: -200px;
+}
+
+
+
