@@ -32,15 +32,12 @@ class Cushion {
 		ctx.restore();
 	}
 
-	// Возвращает единичный вектор, направление которого от шара до точки на
-    // границе стола.
-
 	ball_impact_vector(ball, position){
-  if (!position) {
-    position = ball.position;
-  }
+  		if (!position) {
+    		position = ball.position;
+  		}
 
-  var points = this.polygon.points; // length == 4
+  var points = this.polygon.points; 
   var i;
 
   for (i=0; i<points.length; i++) {
