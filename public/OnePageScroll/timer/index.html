@@ -1,0 +1,26 @@
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script> 
+  <script>
+var myModule = angular.module("timerApp", []);
+  myModule.controller("timerCtrl",['$scope','$timeout', function($scope,$timeout){
+  $scope.counter = 5;
+  var stopped; 
+  $scope.countdown = function() {
+    stopped = $timeout(function() {
+      if ($scope.counter == 0) {
+      alert("Your time run's out!");
+    }
+      else {
+        $scope.counter--;
+        $scope.countdown(); 
+      }
+    }, 1000);
+  };    
+}]);
+</script>
+<body ng-app="timerApp">
+  <div ng-controller="timerCtrl"> 
+    <p>{{counter}}</p>
+    <button ng-click="countdown()">Start</button>     
+  </div>
+  
+  </body>
