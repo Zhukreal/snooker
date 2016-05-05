@@ -2,10 +2,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 
 var userSchema = new mongoose.Schema({
-    local: {/*
-        id:{
-            type: String
-        },*/
+    local: {
         nickname: {
             type: String,
             default: '',
@@ -14,16 +11,16 @@ var userSchema = new mongoose.Schema({
         },
         email: {
             type: String,
-            default: '',
+            //default: '',
             index: true,
             match: [/.+\@.+\..+/, "Please fill a valid e-mail address"]
         },
         password: {
             type: String,
-            default: '',
+            //default: '',
             validate: [
-                function(password){
-                    return password.length >=4;
+                function (password) {
+                    return password.length >= 4;
                 },
                 'Password should be longer'
             ]
@@ -40,14 +37,15 @@ var userSchema = new mongoose.Schema({
             type: Number,
             default: 0
         },
-        mapId:{
-            type: Number,
-            default: -1
-        }/*,
-        color:{
-            type:String,
-            default: "blue"
-        }*/
+        userState: {
+            type: String,
+            default: ""
+        }
+        /*userState: {
+         type: String,
+         enum: ["waiting", "ready", "playing", "finished"],
+         default: ""
+         }*/
     },
     facebook: {
         id: String,
@@ -70,17 +68,20 @@ var userSchema = new mongoose.Schema({
 
 });
 
-userSchema.methods.generateHash = function(password){
+userSchema.methods.generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
-userSchema.methods.validPassword = function(password) {
+userSchema.methods.validPassword = function (password) {
     return bcrypt.compareSync(password, this.local.password);
 };
 
-userSchema.methods.joinMap = function(map){
+userSchema.methods.joinMap = function (map) {
     this.timeStamp = new Date().getDate();
     this.mapId = map.id;
+};
+userSchema.methods.wait = function () {
+    this.userState = "waiting";
 };
 
 module.exports = mongoose.model('User', userSchema);

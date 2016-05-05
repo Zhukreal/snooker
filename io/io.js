@@ -135,102 +135,110 @@ module.exports = function (server) {
 
     var roomId = generateRoom();
 
-    io.sockets
-        .on('connection', function (socket) {
+    io.sockets.on('connection', function (socket) {
 
-            var userCount = 0;
-            socket.usetCount = userCount;
-            userCount++;
+        var userCount = 0;
+        socket.usetCount = userCount;
+        userCount++;
 
-            socket.player = player;
-
-
-            var userName = socket.client.request.user.local.nickname;
-            console.log("a user %s connected", userName);
-            var userId = socket.client.request.user._id;
+        socket.player = player;
 
 
-            //console.log(socket.client.request.session);
+        var userName = socket.client.request.user.local.nickname;
+        console.log("a user %s connected ", userName);
+        var userId = socket.client.request.user._id;
+
+        socket.room = roomId;
+
+        var closeRoom = function (roomId, opponent) {
+            socket.leave(roomId);
+            io.sockets.socket(opponent).leave(roomId);
+            countGames--;
+        };
+
+        async.parallel([
+            function (cb) {
+                Room.find({}, function (err, room) {
+                    if (err)
+                        throw err;
+                    cb(room);
+                })
+            }
+        ], function (res) {
+            socket.emit('numberOfRooms', res);
+        });
 
 
-            socket.room = roomId;
 
-            //console.log("the room",socket.room)
+        //console.log("Another count of rooms ", tempCount)
+        io.sockets.emit('userCount', {userCount: userCount});
 
-            async.parallel([
-                function (cb) {
-                    Room.find({}, function (err, room) {
-                        if (err)
-                            throw err;
-                        cb(room);
-                    })
+
+        socket
+            .emit('countTemp', Object.keys(io.engine.clients))
+            .emit('initPlayer', {
+                nickName: userName,
+                playerId: userId,
+                roomId: roomId
+            })
+            .emit('start', function(){
+                var game = require('../models/game');
+                game.find({},function(err,game){
+                    if(err)
+                        throw err;
+
+                })
+            })
+            /*.on('join', function(){
+             socket*/.join(roomId, function (err) {
+                if (!err) {
+                    rooms = socket.rooms;
+
+
+                    //console.log(rooms);
+
+
+                    io.sockets['in'](roomId).emit('joinedToRoom', {
+                        'text': 'Player ' + userName + ' has joined into the game'
+                    });
+                } else {
+                    console.log(err, e);
                 }
-            ], function (res) {
-                socket.emit('numberOfRooms', res);
+            })
+            //.emit('countOfUsers', {countOfUsers: tempCount})
+            /*})*/
+            .on('leave', function (roomId) {
+                socket.leave(roomId);
+            })
+            //.emit('someEvent',{jarosh: "pidor"})
+
+            .emit('message', {message: "Waiting for opponent..."})
+            .on('searchRoom', function (name) {
+                var gotRoom = false;
+                console.log('searching...');
+                for (var i = 0; i < rooms.length; ++i) {
+
+                }
+            })
+            .on('connectToRoom', function (room) {
+                socket.join(room);
+            })
+            .on('disconnect', function () {
+                userCount--;
+                socket.broadcast.emit('leave', userName);
+                socket.emit('userCount', {userCount: userCount});
             });
 
+        setInterval(function () {
+            io.sockets.emit('countTemp', Object.keys(io.engine.clients))
+        }, 5000);
 
-            //console.log("Another count of rooms ", tempCount)
-            io.sockets.emit('userCount', {userCount: userCount});
+        /*
+         socket.emit('count', {
+         count: Object.keys(io.sockets.connected).length
+         });
+         });*/
 
-
-            socket
-                .emit('countTemp',Object.keys(io.engine.clients))
-                .emit('initPlayer', {
-                    nickName: userName,
-                    playerId: userId,
-                    roomId: roomId
-                })
-                /*.on('join', function(){
-                 socket*/.join(roomId, function (err) {
-                    if (!err) {
-                        rooms = socket.rooms;
-
-
-                        //console.log(rooms);
-
-
-                        io.sockets['in'](roomId).emit('joinedToRoom', {
-                            'text': 'Player ' + userName + ' has joined into the game'
-                        });
-                    } else {
-                        console.log(err, e);
-                    }
-                })
-                //.emit('countOfUsers', {countOfUsers: tempCount})
-                /*})*/
-                .on('leave', function (roomId) {
-                    socket.leave(roomId);
-                })
-                //.emit('someEvent',{jarosh: "pidor"})
-
-                .emit('message', {message: "Waiting for opponent..."})
-                .on('searchRoom', function (name) {
-                    var gotRoom = false;
-                    console.log('searching...');
-                    for (var i = 0; i < rooms.length; ++i) {
-
-                    }
-                })
-                .on('connectToRoom', function (room) {
-                    socket.join(room);
-                })
-                .on('disconnect', function () {
-                    userCount--;
-                    socket.broadcast.emit('leave', userName);
-                    socket.emit('userCount', {userCount: userCount});
-                });
-
-            setInterval(function(){
-                io.sockets.emit('countTemp',Object.keys(io.engine.clients))
-            },5000);
-
-            /*
-             socket.emit('count', {
-             count: Object.keys(io.sockets.connected).length
-             });
-             });*/
-
-        });
+    });
 
 };

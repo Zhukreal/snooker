@@ -46,8 +46,8 @@ module.exports = function (passport) {
                         newUser.save(function (err) {
                             if (err)
                                 throw err;
-                            req.session.user = user;
-                            req.cookies.user = user;
+                            req.session.user = newUser;
+                            req.cookies.user = newUser;
                             return done(null, newUser);
                         });
                     }

@@ -8,13 +8,14 @@ var roomSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    players: [/*user*/mongoose.Schema.Types.Mixed],
-    waitingPlayers : [mongoose.Schema.Types.Mixed],
+    players: [/*user*/mongoose.Schema.Types.Mixed]//,
+    //waitingPlayers : [mongoose.Schema.Types.Mixed]
+    /*,
     roomState: {
         type: String,
         enum: ["waiting", "ready", "playing", "finished"],
         default: "waiting"
-    }
+    }*/
 });
 
 roomSchema.methods.wait = function () {

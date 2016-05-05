@@ -110,7 +110,7 @@ app.controller('GameController', function ($scope) {
 
 
     var canvas=$scope.canvas;
-    console.log(canvas.style);
+    //console.log(canvas.style);
     function getCoords(elem) {
 
         var box = elem.getBoundingClientRect();
@@ -141,7 +141,7 @@ app.controller('GameController', function ($scope) {
 
         var x = e.pageX - canvasCoords.left;
         var y = e.pageY - canvasCoords.top;
-        console.log('X: ', x, 'Y: ', y);
+        //console.log('X: ', x, 'Y: ', y);
 
 
         var ballX = ballCoords.left;
@@ -286,6 +286,16 @@ app.controller('GameController', function ($scope) {
     }
 
 
+
+
+
+
+
+
+
+
+
+
     socket
         .on('connect', function () {
             console.log("You\'ve been connected successfully");
@@ -298,6 +308,7 @@ app.controller('GameController', function ($scope) {
         })
         .on('wait', function () {
             $("body").append("<pre>Waiting for the opponent...</pre>");
+            console.log("Waiting for the opponent...")
         })
         .on('exit', function () {
             Snooker.endGame(Snooker.turn, 'exit');
