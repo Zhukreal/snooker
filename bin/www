@@ -97,24 +97,27 @@ Room.findOne({name: "Lobby"}, function (err, lobby) {
         var lobbyRoom = new Room({
             name: "Lobby"
         });
+        //lobbyRoom.roomState = "incomplete";
         lobbyRoom.save(function (err) {
             if (err)
                 throw err;
         });
     }
 });
+
+
 /*var User = require('../models/user');
-User.findOne({'local.nickname':'danik'},function(err,danik){
-    if(err){
-        throw err;
-    } else {
-        danik.local.userState = "";
-        danik.save(function(err){
-            if(err){
-                throw err;
-            }
-        })
-    }
-})*/
+ User.findOne({'local.nickname':'danik'},function(err,danik){
+ if(err){
+ throw err;
+ } else {
+ danik.local.userState = "";
+ danik.save(function(err){
+ if(err){
+ throw err;
+ }
+ })
+ }
+ })*/
 
 require('../io/io')(server);

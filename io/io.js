@@ -9,8 +9,8 @@ var player = require('../models/user');
 var Room = require('../models/room');
 const crypto = require('crypto');
 
-module.exports = function (server) {
 
+module.exports = function (server) {
 
     const io = require('socket.io').listen(server);
     io.set('origins', 'localhost:*');
@@ -19,10 +19,9 @@ module.exports = function (server) {
 
     console.log('io is being connected');
 
-
     function loadSession(sid, callback) {
         sessionStore.load(sid, function (err, session) {
-            if (arguments.length == 0) {
+            if (arguments.length === 0) {
                 return callback(null, null);
             } else {
                 return callback(null, session);
@@ -54,7 +53,7 @@ module.exports = function (server) {
                 handshake.cookies = cookie.parse(handshake.headers.cookie || '');
                 var sidCookie = handshake.cookies['connect.sid'];
                 var sid = cookieParser.signedCookie(sidCookie, 'keyboard cat');
-                console.log("Session ID : ", sid);
+                //console.log("Session ID : ", sid);
                 loadSession(sid, callback);
             },
             function (session, callback) {
@@ -71,7 +70,15 @@ module.exports = function (server) {
                 }
                 else {
                     handshake.user = user;
-                    callback(null, true);
+                    callback();
+
+                    Object.prototype.getFirstElement = function (arr) {
+                        for (var i in arr) {
+                            return arr[i];
+                            break;
+                        }
+                    };
+
                 }
             }
 
@@ -87,7 +94,6 @@ module.exports = function (server) {
         });
 
     });
-
 
     io.on('session:reload', function (sid) {
         var clients = io.sockets.clients();
@@ -133,112 +139,77 @@ module.exports = function (server) {
     }
 
 
-    var roomId = generateRoom();
-
     io.sockets.on('connection', function (socket) {
-
-        var userCount = 0;
-        socket.usetCount = userCount;
-        userCount++;
-
-        socket.player = player;
-
-
-        var userName = socket.client.request.user.local.nickname;
-        console.log("a user %s connected ", userName);
-        var userId = socket.client.request.user._id;
-
-        socket.room = roomId;
-
-        var closeRoom = function (roomId, opponent) {
-            socket.leave(roomId);
-            io.sockets.socket(opponent).leave(roomId);
-            countGames--;
-        };
-
-        async.parallel([
-            function (cb) {
-                Room.find({}, function (err, room) {
-                    if (err)
-                        throw err;
-                    cb(room);
-                })
-            }
-        ], function (res) {
-            socket.emit('numberOfRooms', res);
+        io.of('/about').on('connection', function (socket) {
+            console.log('user %s connected into the about page', socket.client.request.user.profile.nickname);
+            socket
+                .emit('firstEvent', {'var': 2})
         });
-
-
-
-        //console.log("Another count of rooms ", tempCount)
-        io.sockets.emit('userCount', {userCount: userCount});
-
-
-        socket
-            .emit('countTemp', Object.keys(io.engine.clients))
-            .emit('initPlayer', {
-                nickName: userName,
-                playerId: userId,
-                roomId: roomId
-            })
-            .emit('start', function(){
-                var game = require('../models/game');
-                game.find({},function(err,game){
-                    if(err)
-                        throw err;
-
-                })
-            })
-            /*.on('join', function(){
-             socket*/.join(roomId, function (err) {
-                if (!err) {
-                    rooms = socket.rooms;
-
-
-                    //console.log(rooms);
-
-
-                    io.sockets['in'](roomId).emit('joinedToRoom', {
-                        'text': 'Player ' + userName + ' has joined into the game'
+        io.of('/tables').on('connection', function (socket) {
+            socket.room = generateRoom();
+            console.log('user %s connected into the tables page', socket.client.request.user.profile.nickname);
+            socket.emit('totalCountOfUsers', Object.keys(io.engine.clients));
+            setInterval(function () {
+                io.sockets.emit('totalCountOfUsers', Object.keys(io.engine.clients))
+            }, 10000);
+            async.waterfall([
+                function (cb) {
+                    Room.find({'roomState': "incomplete"}, function (err, iRoom) {
+                        if (err) {
+                            throw err;
+                        } else {
+                            socket.emit('countOfIncompleteRooms', {
+                                'count': iRoom.length,
+                                'firstRoom': Object.getFirstElement(iRoom),
+                                'rndRoomName': socket.room
+                            }, function (confirmation) {
+                                //console.log(confirmation);
+                                cb(null, confirmation);
+                            });
+                        }
                     });
-                } else {
-                    console.log(err, e);
-                }
-            })
-            //.emit('countOfUsers', {countOfUsers: tempCount})
-            /*})*/
-            .on('leave', function (roomId) {
-                socket.leave(roomId);
-            })
-            //.emit('someEvent',{jarosh: "pidor"})
-
-            .emit('message', {message: "Waiting for opponent..."})
-            .on('searchRoom', function (name) {
-                var gotRoom = false;
-                console.log('searching...');
-                for (var i = 0; i < rooms.length; ++i) {
+                },
+                function (rName, cb) {
 
                 }
-            })
-            .on('connectToRoom', function (room) {
-                socket.join(room);
-            })
-            .on('disconnect', function () {
-                userCount--;
-                socket.broadcast.emit('leave', userName);
-                socket.emit('userCount', {userCount: userCount});
+            ]);
+        });
+        /*console.log('room',socket.room);*/
+        //console.log("http://localhost:8080/game/xotV5lNMQx9JVtu".match(/\/game\/(\S+)/)[0])
+        io.of('\/(\S+)').on('connection', function (socket) {//\/game\/(\w+)
+            console.log("http://localhost:8080/game/xotV5lNMQx9JVtu".match(/\/(\S+)/))
+            console.log('socket nsp', socket.nsp.name);
+            socket.emit('lol', {'fuck': 'this'});
+        });
+        socket.on('joinGameRoom', function (data) {
+            console.log(data);
+            socket.roomName = data.roomName;
+            socket.join(data.roomName);
+            io.sockets['in'](data.roomName).emit('lol', {
+                'text': 'Player ' + socket.client.request.user.profile.nickname + ' has joined into the game'
             });
-
-        setInterval(function () {
-            io.sockets.emit('countTemp', Object.keys(io.engine.clients))
-        }, 5000);
-
-        /*
-         socket.emit('count', {
-         count: Object.keys(io.sockets.connected).length
-         });
-         });*/
-
+        });
+        socket.on('disconnect', function () {
+            io.sockets['in'](socket.roomName).emit('leave', socket.client.request.user.profile.nickname);
+        });
+        socket.emit('initPlayer', {'user': socket.client.request.user})
     });
+
+
+    /* io.of(^\\/game\\/(\\d+)$).on('connection', function(socket){
+     console.log('lol');
+     })*/
+
+    /*
+
+
+
+     /!*
+     socket.emit('count', {
+     count: Object.keys(io.sockets.connected).length
+     });
+     });*!/
+
+     });*/
 
 };

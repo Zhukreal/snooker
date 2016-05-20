@@ -13,8 +13,8 @@
 
 <div id="w">
     <div id="content" class="clearfix">
-        <div id="userphoto"><img src="../userPhotos/<%=userPhoto%>" alt="default avatar" height="400" width="300"></div>
-        <h1><%= user.local.nickname %></h1>
+        <div id="userphoto"><img src="../userPhotos/<%=user.profile.photo.data%>" alt="default avatar" height="400" width="300"></div>
+        <h1><%= user.profile.nickname %></h1>
 
         <nav id="profiletabs">
             <ul class="clearfix">
