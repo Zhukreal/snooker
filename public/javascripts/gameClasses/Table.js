@@ -1,3 +1,50 @@
+var white = "#ffffff";
+var red = "#ff0000";
+var yellow = "#ffff00";
+var green = "#00ff00";
+var black = "#000000";
+var gray = "#808080";
+var orange = "#EEAC41";
+var blue = "#0000ff";
+var cyan = "#00ffff";
+var _green = "#106E19";
+
+var purple = "#ff00ff";
+var gold = "#ffff80";
+var orange = "#ffa000";
+var darkgreen = "#008000";
+var brown = "#808040";
+
+var show_targetting_line = 1;
+var game = "8 Ball";
+
+var table_scale = 0.7;
+var ball_scale = table_scale / 20;
+var pocket_scale = 1.5;
+var rack_ball_spacing = 0.01;
+
+var skimming_friction = 1 / 400;
+var rolling_threshold = skimming_friction * 30;
+var rolling_friction = skimming_friction / 20;
+var static_threshold = rolling_friction * 10;
+
+var strength_scaling = 2.5;
+var masse_scaling = 1;
+
+function status_message(prefix, msg) {
+    var elem = document.getElementById("msg");
+    var txt = prefix;
+    if (msg != null) {
+        txt += ": " + msg;
+    }
+    elem.innerHTML = txt;
+}
+
+function append_status_message(prefix, msg) {
+    var elem = document.getElementById("msg");
+    elem.innerHTML += "<br>" + prefix + ": " + msg;
+}
+
 function Table () {
     this.update_id = null;
     this.shot = null;
@@ -24,7 +71,7 @@ Table.prototype.initialize = function ( game ) {
   this.cushions.push( new Cushion( -1, -0.5, 1, 0, ball_scale*pocket_scale ) );
 
 
-  this.cue_ball = new Ball( .5, 0, ball_scale, white, "cue" );
+  this.cue_ball = new Ball( .5, -3, ball_scale, white, "cue" );
   this.balls.push( this.cue_ball );
   this.ball_in_hand = 1;
   this.is_break_shot = false;

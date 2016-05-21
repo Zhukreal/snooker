@@ -4,10 +4,11 @@
     <title>PlayGame</title>
     <meta charset='utf-8'/>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/vendor/bower_components/angular/angular.min.js"></script>
     <script src="/vendor/bower_components/socket.io-client/socket.io.js"></script>
     <script src="/vendor/bower_components/jquery/jquery.min.js"></script>
 
-<!--    <script src="/javascripts/gameClasses/canvas_pool.js"></script>
+    <script src="/javascripts/gameClasses/canvas_pool.js"></script>
     <script src="/javascripts/gameClasses/Ball.js"></script>
     <script src="/javascripts/gameClasses/Cushion.js"></script>
     <script src="/javascripts/gameClasses/Game.js"></script>
@@ -17,20 +18,22 @@
     <script src="/javascripts/gameClasses/Polygon.js"></script>
     <script src="/javascripts/gameClasses/Shot.js"></script>
     <script src="/javascripts/gameClasses/Table.js"></script>
-    <script src="/javascripts/gameClasses/Vector.js"></script>-->
+    <script src="/javascripts/gameClasses/Vector.js"></script>
 
 
 </head>
-<body ng-app="GameApp" ng-controller="GameController" ><!--onload="init_pool_table( &quot;pool_table&quot;)"-->
+<body ng-app="GameApp" ng-controller="GameController" data-ng-init="init()">
+<!-- onload="init_pool_table( &quot;pool_table&quot;)" -->
 
 
 
-<!--<div id="pool_table">
-    <canvas id="pool_table_canvas" width="1904" height="952">Sorry, your browser doesn't appear to support the HTML-5
-        Canvas
-    </canvas>
+<div id="pool_table" >
+
 </div>
-<div id="msg"></div>-->
+
+
+
+<div id="msg"></div>
 <div class="info">
     <!--{{player}}-->
     {{player.nickname}}
@@ -39,9 +42,8 @@
 
 </body>
 
-<pre style="display: none"><%=currentRoomName%></pre>
 
-<script src="/vendor/bower_components/angular/angular.min.js"></script>
+
 <script src="/javascripts/appRoutes.js"></script>
 <script src="/vendor/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="/javascripts/controllers/GameCtrl.js"></script>

@@ -20,7 +20,6 @@ class Ball {
         return this.velocity.is_null() && this.spin.is_null();
     }
 
-
     draw(ctx) {
         ctx.save();
         ctx.fillStyle = this.color;
@@ -30,12 +29,12 @@ class Ball {
         ctx.fill();
 
         /*if (this.color == gold) {
-            ctx.fillStyle = white;
-            ctx.beginPath();
-            ctx.arc(this.position.x, this.position.y, this.radius / 2.5, 0, Math.PI * 2, true);
-            ctx.closePath();
-            ctx.fill();
-        }*/
+         ctx.fillStyle = white;
+         ctx.beginPath();
+         ctx.arc(this.position.x, this.position.y, this.radius / 2.5, 0, Math.PI * 2, true);
+         ctx.closePath();
+         ctx.fill();
+         }*/
 
         ctx.restore();
     }
@@ -68,13 +67,12 @@ class Ball {
     end_update(table) {
         if (this.position.x - this.radius < -1
             || this.position.x + this.radius > 1
-            || this.position.y - this.radius < -.5b
+            || this.position.y - this.radius < -.5
             || this.position.y + this.radius > .5
         ) {
             this.stop();
             return false;
-        }
-        else {
+        } else {
             this.velocity.add(this.acceleration);
             var clamp = 0.8;
             if (this.velocity.magnitude() > clamp) {
@@ -93,8 +91,6 @@ class Ball {
             this.velocity.add_scaled(impact, 4 * speed);
             this.acceleration.add_scaled(impact.normal(), -this.side);
         }
-
-
         this.velocity.scale(0.9);
         this.side /= 2;
         this.spin.scale_down(2);
@@ -128,7 +124,7 @@ class Ball {
         }
 
         var speed = velocity.magnitude();
-        var acc;
+        var acc = null;
 
         if (speed > rolling_threshold) {
             acc = skimming_friction;
@@ -219,7 +215,9 @@ class Ball {
             if (impact) return false;
         }
 
-        if (this.is_potted(table.pockets, position)) return false;
+        if (this.is_potted(table.pockets, position)) {
+            return false;
+        }
 
         return true;
     }

@@ -1,3 +1,6 @@
+var lol = 'lol';
+
+/*
 var white = "#ffffff";
 var red = "#ff0000";
 var yellow = "#ffff00";
@@ -48,7 +51,6 @@ function append_status_message(prefix, msg) {
 var draw_id = null;
 
 
-
 var current_game;
 function set_player_type(form, index) {
     if (!current_game) return;
@@ -63,110 +65,8 @@ function set_player_type(form, index) {
 
 function init_pool_table(name) {
 
-    if (draw_id) {
-        clearInterval(draw_id);
-        draw_id = null;
-    }
-
-    var game_rb = document.getElementsByName(name + "_game");
-    var i;
-    for (i = 0; i < game_rb.length; ++i) {
-        if (game_rb[i].checked) game = game_rb[i].value;
-    }
-
     var div = document.getElementById(name);
 
-    if (game == "Rules") {
-        var xmlhttp = GetXmlHttpObject();
-        if (xmlhttp == null) {
-            div.innerHTML = "<b>ERROR</b>: Your browser doesn't seem to support AJAX";
-            return;
-        }
-
-        var marker = "loading User Guide ...";
-        var url = "canvas_pool_rules.html";
-
-        div.innerHTML = marker;
-
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4) {
-                var html = xmlhttp.responseText;
-                if (div.innerHTML == marker) {
-                    div.innerHTML = html;
-                    status_message("viewing", url);
-                    window.onresize = null;
-                }
-            }
-        }
-
-        status_message("loading", url);
-
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send(null);
-        return;
-    }
-
-    if (game == "Source") {
-        var code_div = document.createElement("div");
-        var code = document.createElement("iframe");
-        var txt = document.createTextNode("Oops, source code not visible");
-        code.width = "100%";
-
-        window.onresize = function () {
-            var height = window.innerHeight - 350;
-            if (height < 100) height = 100;
-            code.height = height;
-        }
-        window.onresize.call();
-
-        code.appendChild(txt);
-
-        function view_class(filename) {
-            return function () {
-                var url = filename;
-                status_message("viewing", url);
-                code.src = url;
-            }
-        }
-
-        var form = document.createElement("form");
-
-        var txt = document.createTextNode("Source Classes: ");
-        form.appendChild(txt);
-
-        function add_file(name, filename, checked) {
-            var input = document.createElement("input");
-            input.type = "radio";
-            input.name = "class_view";
-            input.value = filename;
-            input.onclick = view_class(filename);
-            if (checked) {
-                input.checked = true;
-                input.onclick();
-            }
-            form.appendChild(input);
-            var txt = document.createTextNode(name);
-            form.appendChild(txt);
-        }
-
-        function add_selection(name) {
-            add_file(name, name + ".js");
-        }
-
-        add_file('tests', 'tests.html', true);
-        add_file("main", "canvas_pool.js");
-        for (i in classes) {
-            add_selection(classes[i]);
-        }
-
-        div.innerHTML = "";
-        div.appendChild(form);
-        div.appendChild(code);
-
-        status_message("select Class to view");
-
-        return;
-    }
 
     var table;
     var canvas_name = name + "_canvas";
@@ -239,52 +139,28 @@ function init_pool_table(name) {
     if (table) {
         window.onresize = set_drawing_context;
 
-        function key_down_fn(evt) {
-            if (evt.keyCode == 48) { // '0'
-                for (i in table.balls) {
-                    table.balls[i].stop();
-                }
-            }
-            if (evt.keyCode == 57) { // '9'
-                table.ball_in_hand = 1;
-            }
-            if (evt.keyCode >= 49 && evt.keyCode <= 55) { // 1..7
-                strength_scaling = ((evt.keyCode - 48) / 4) * 2.5;
-            }
-            if (evt.keyCode == 56) { // '8'
-                masse_scaling = 4;
-            }
+
+    }
+
+
+    function draw_fn() {
+        table.draw();
+        if (current_game != table.game) {
+            current_game = table.game;
+            set_player_type("player1_type", 0);
+            set_player_type("player2_type", 1);
         }
-
-        function key_up_fn(evt) {
-            if (evt.keyCode >= 49 && evt.keyCode <= 55) { // 1..7
-                strength_scaling = 2.5;
-            }
-            if (evt.keyCode == 56) { // '8'
-                masse_scaling = 1;
-            }
-        }
-
-        document.onkeydown = key_down_fn;
-        document.onkeyup = key_up_fn;
-
-        function draw_fn() {
-            table.draw();
-            if (current_game != table.game) {
-                current_game = table.game;
-                set_player_type("player1_type", 0);
-                set_player_type("player2_type", 1);
-            }
-            if (table.is_stable() && table.update_id != null) {
-                clearInterval(table.update_id);
-                table.update_id = null;
-                table.game.shot_complete();
-                table.player().begin_shot();
-            }
-        }
-
-        if (draw_id == null) {
-            draw_id = setInterval(draw_fn, 50);
+        if (table.is_stable() && table.update_id != null) {
+            clearInterval(table.update_id);
+            table.update_id = null;
+            table.game.shot_complete();
+            table.player().begin_shot();
         }
     }
+
+    if (draw_id == null) {
+        draw_id = setInterval(draw_fn, 50);
+    }
+
 }
+*/

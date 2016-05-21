@@ -158,25 +158,33 @@ function Game_8ball(table) {
 Game_8ball.prototype = new Game();
 
 Game_8ball.prototype.create_balls = function (radius) {
-    this.create_ball(0, 0, red, "red");
+    this.create_ball(-3, 0, red, "red");
 
-    this.create_ball(1, 1, red, "red");
-    this.create_ball(1, -1, red, "red");
+    this.create_ball(-2, 1, red, "red");
+    this.create_ball(-2, -1, red, "red");
 
-    this.create_ball(2, 2, red, "red");
-    this.create_ball(2, 0, red, "red");
-    this.create_ball(2, -2, red, "red");
+    this.create_ball(-1, 2, red, "red");
+    this.create_ball(-1, 0, red, "red");
+    this.create_ball(-1, -2, red, "red");
 
-    this.create_ball(3, 3, red, "red");
-    this.create_ball(3, 1, red, "red");
-    this.create_ball(3, -1, red, "red");
-    this.create_ball(3, -3, red, "red");
+    this.create_ball(0, 3, red, "red");
+    this.create_ball(0, 1, red, "red");
+    this.create_ball(0, -1, red, "red");
+    this.create_ball(0, -3, red, "red");
 
-    this.create_ball(4, 4, red, "red");
-    this.create_ball(4, 2, red, "red");
-    this.create_ball(4, 0, red, "red");
-    this.create_ball(4, -2, red, "red");
-    this.create_ball(4, -4, red, "red");
+    this.create_ball(1, 4, red, "red");
+    this.create_ball(1, 2, red, "red");
+    this.create_ball(1, 0, red, "red");
+    this.create_ball(1, -2, red, "red");
+    this.create_ball(1, -4, red, "red");
+
+    this.create_ball(4, 0, black, "brown")
+
+    this.create_ball(-5, 0, purple, "purple");
+
+    this.create_ball(-16.4, -7, yellow, "yellow");
+    this.create_ball(-16.4, 0, orange, "orange");
+    this.create_ball(-16.4, 7, _green, "_green");
 }
 
 
@@ -268,6 +276,7 @@ Game_8ball.prototype.shot_complete = function () {
     }
 
 }
-Game.prototype.force_position_for_testing = function () {}
+Game.prototype.force_position_for_testing = function () {
+}
 
 
