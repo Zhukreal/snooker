@@ -30,11 +30,10 @@ module.exports = function (router, passport) {
 
     router.get('/game/:id', createRoom, /*require('../middleware/loadRoom'),*/ function (req, res, next) {
         if (req.user) {
-            //req.session.room = createRoom.
             res.render('game',{
-                currentRoomName: req.params.id
+                currentRoomName: req.params.id,
+                playerPhoto : req.user.profile.photo.data
             });
-            /*console.log(res);*/
         } else {
             res.redirect('/');
         }

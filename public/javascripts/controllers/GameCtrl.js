@@ -1,6 +1,12 @@
-var app = angular.module('GameApp', []);
+var app = angular.module('GameApp', ['ui.bootstrap'])
+    /*.config(function($routProvider){
+        $routeProvider
+            .when('/new',{
+                templateURL:'winner_modal.ejs'
+            })
+    })*/
 
-app.controller('GameController', function ($scope, $location) {
+app.controller('GameController',  function ($scope, $location, $uibModal) {
 
     $scope.draw_id = null;
     $scope.current_game = null;
@@ -121,6 +127,24 @@ app.controller('GameController', function ($scope, $location) {
     };
 
 
+    $scope.declareWinner = function () {
+        /*Game.incrementTarget();
+         Game.shufflePlayers();*/
+        //$location.path('/new');
+        $uibModal.open({
+
+
+            controller: function($scope){alert('lol')},
+            templateUrl: '/tables',
+            resolve: {
+                winner: function(){
+                    return $scope.player;
+                }
+            }
+        });
+    };
+
+
     var socket = io.connect('/', {
         reconnect: false
     });
@@ -128,10 +152,30 @@ app.controller('GameController', function ($scope, $location) {
     $scope.player = {
         nickname: "",
         turn: "",
-        room: ""
+        room: "",
+        photo: null
     };
 
     console.info("path %s", $location.absUrl().split('/').pop());
+
+
+    /*$.ajax({
+            url: $location.absUrl(),
+            type: 'GET',
+            //dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+            data: {param1: 'value1'}
+        })
+        .done(function(data) {
+            alert(data);
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });*/
+
 
 
     socket
@@ -182,9 +226,11 @@ app.controller('GameController', function ($scope, $location) {
              console.log($scope.player);
 
              $("body").append($scope.player.nickname);*/
+            console.log(data.user)
             $scope.player.nickname = data.user.profile.nickname;
             $scope.player.turn = 'X';
             $scope.player.room = $location.absUrl().split('/').pop();
+            $scope.player.photo = data.user.profile.photo.data;
             $scope.$apply();
             //$('div.info').append($scope.player.nickname);
             //$('div.info span').append($scope.player.turn);
@@ -233,4 +279,5 @@ app.controller('GameController', function ($scope, $location) {
                 }, 500);
             }
         });
-});
+})
+

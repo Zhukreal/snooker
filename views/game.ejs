@@ -5,10 +5,11 @@
     <meta charset='utf-8'/>
     <link rel="stylesheet" href="/stylesheets/style.css">
     <script src="/vendor/bower_components/angular/angular.min.js"></script>
+    <script src="/vendor/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="/vendor/bower_components/socket.io-client/socket.io.js"></script>
     <script src="/vendor/bower_components/jquery/jquery.min.js"></script>
 
-    <script src="/javascripts/gameClasses/canvas_pool.js"></script>
+    <!--<script src="/javascripts/gameClasses/canvas_pool.js"></script>-->
     <script src="/javascripts/gameClasses/Ball.js"></script>
     <script src="/javascripts/gameClasses/Cushion.js"></script>
     <script src="/javascripts/gameClasses/Game.js"></script>
@@ -26,11 +27,34 @@
 <!-- onload="init_pool_table( &quot;pool_table&quot;)" -->
 
 
+<!--<input type="button" ng-click="declareWinner()">-->
+<div class="players">
+    <div class="current-player" ng-model="userCounter" ng-init="userCounter=true;">
 
-<div id="pool_table" >
-
+        <div class="nickname" ng-if="userCounter">
+            <pre>{{player.nickname}}</pre>
+        </div>
+        <div class="turn">
+            <pre>{{player.turn}}</pre>
+        </div>
+        <div class="photo">
+            <img src="/userPhotos/<%= playerPhoto %>" alt=""
+                 style="width: 30px;height: 30px;border-radius: 50%;margin-top: 8px;">
+        </div>
+    </div>
+    <div class="opponent">
+        <div class="nickname">
+            <pre>{{opponent.nickname}}ne danik</pre>
+        </div>
+        <div class="turn">
+            <pre>{{opponent.turn}}ne x</pre>
+        </div>
+    </div>
 </div>
 
+<div id="pool_table">
+
+</div>
 
 
 <div id="msg"></div>
@@ -43,8 +67,8 @@
 </body>
 
 
-
 <script src="/javascripts/appRoutes.js"></script>
 <script src="/vendor/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<!--<script src="/javascripts/controllers/WinnerModalCtrl.js"></script>-->
 <script src="/javascripts/controllers/GameCtrl.js"></script>
 </html>

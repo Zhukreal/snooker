@@ -78,3 +78,5 @@ class Pocket {
     }
 
 }
+
+//export {Pocket}

@@ -50,62 +50,65 @@ module.exports = function (req, res, next) {
         },
         function (incRoom, cb) {
             /*User.find({'local.userState': "waiting"}, function (err, wUser) {
-                if (err) {
-                    next(err);
-                } else {*/
-            console.log('count of incomplete rooms',_.size(incRoom));
-                    if(incRoom.length == 0){
-                        var newRoom = new Room({
-                            name: req.params.id
-                        });
-                        newRoom.players.push(req.user._id);
-                        newRoom.roomState = "incomplete";
-                        newRoom.save(function(err){
-                            if(err){
-                                throw err;
-                            }
-                        })
-                    } else {
-                        Object.getFirstElement(incRoom).players.push(req.user._id);
-                        Object.getFirstElement(incRoom).roomState = "complete";
-                        Object.getFirstElement(incRoom).save(function(err){
-                            if(err){
-                                throw err;
-                            }
-                        });
-                        cb(null,req.user,Object.getFirstElement(incRoom).players[0]);
+             if (err) {
+             next(err);
+             } else {*/
+            console.log('count of incomplete rooms', _.size(incRoom));
+            if (incRoom.length == 0) {
+                var newRoom = new Room({
+                    name: req.params.id
+                });
+                newRoom.players.push(req.user._id);
+                newRoom.roomState = "incomplete";
+                newRoom.save(function (err) {
+                    if (err) {
+                        throw err;
                     }
+                })
+            } else {
+                Object.getFirstElement(incRoom).players.push(req.user._id);
+                Object.getFirstElement(incRoom).roomState = "complete";
+                Object.getFirstElement(incRoom).save(function (err) {
+                    if (err) {
+                        throw err;
+                    }
+                });
+                cb(null, req.user, Object.getFirstElement(incRoom).players[0]);
+            }
             /*    }
-            })*/
+             })*/
 
         },
-        function(firstPlayer,secondPlayer,cb){
-            console.log("retUser",firstPlayer);
+        function (firstPlayer, secondPlayer, cb) {
+            console.log("retUser", firstPlayer);
             firstPlayer.local.userState = "ready";
-            firstPlayer.save(function(err){
-                if(err){
+            firstPlayer.save(function (err) {
+                if (err) {
                     throw err;
                 }
             });
-            User.findById(secondPlayer, function(err,user){
-                if(err){
+            User.findById(secondPlayer, function (err, user) {
+                if (err) {
                     next(err);
                 } else {
                     user.local.userState = "ready";
-                    user.save(function(err){
-                        if(err){
+                    user.save(function (err) {
+                        if (err) {
                             throw err;
                         }
                     });
-                    cb(firstPlayer._id,secondPlayer);
+                    cb(null, firstPlayer._id, secondPlayer);
                 }
             })
         },
         function (firstPlayer, secondPlayer, cb) {
-            Room.findOne({'name': "Lobby"}, function (err, lobby) {
+            Room.findOne({name: 'Lobby'}, function (err, lobby) {
                 if (err) {
                     next(err);
                 } else {
+                    //res.locals.currentPlayer = firstPlayer;
+
+
                     lobby.players.pop(firstPlayer);
                     lobby.players.pop(secondPlayer);
                     lobby.playerCount -= 2;
@@ -114,11 +117,17 @@ module.exports = function (req, res, next) {
                             throw err;
                         }
                     });
-                    cb(null, null);
+                    cb(null, firstPlayer, secondPlayer);
                 }
-            })
+            });
         }
-    ]);
+    ], function (err, firstP, secondP) {
+        if (err) {
+            throw err
+        } else {
+            console.log('result', firstP, ' ', secondP);
+        }
+    });
 
 
     Object.prototype.getFirstElement = function (arr) {
