@@ -19,7 +19,7 @@ body {
     background-repeat: no-repeat;
 }
 .page2 {
-    background: #B0C4DE;
+    background: url(../images/billiard-foto.jpg);
 }
 .page3 {
     background: #FFE4E1;
@@ -145,6 +145,14 @@ body {
     width: 400px;
     height: 400px;
 }
+.plaxBall2 img{
+    width: 300px;
+    height: 300px;
+}
+.plaxBall3 img{
+    width: 300px;
+    height: 300px;
+}
 .jumbotro {
     font-size: 30px;
     color: #191970;
@@ -180,6 +188,24 @@ body {
     position: absolute;
     margin-top: -200px;
     margin-left: -200px;
+}
+#left {
+    top: 50%;
+    left: 50%;
+    width: 450px;
+    height: 450px;
+    position: absolute;
+    margin-top: -150px;
+    margin-left: -350px;
+}
+#right {
+    top: 50%;
+    left: 50%;
+    width: 450px;
+    height: 450px;
+    position: absolute;
+    margin-top: -150px;
+    margin-left: -50px;
 }
 #content {
     line-height: 32px;
@@ -275,4 +301,6 @@ footer {
         }
     }
 }
-
+#lol1,#lol2,#lol3,#lol4 {
+    font-size: 17px;
+}

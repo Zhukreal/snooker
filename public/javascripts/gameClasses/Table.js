@@ -178,7 +178,7 @@ Table.prototype.draw = function () {
     ctx.closePath();
     ctx.fill();
 
-    ctx.strokeStyle = black;
+    ctx.strokeStyle = red;
     ctx.lineWidth = 0.005;
     ctx.beginPath();
     ctx.moveTo( 0.5, 0.5 );

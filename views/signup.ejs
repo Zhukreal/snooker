@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
+
 <head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sofia' rel='stylesheet' type='text/css'>
     <title>Snooker</title>
     <link rel="stylesheet" href="/vendor/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> &lt;!&ndash; load bootstrap css &ndash;&gt;-->
@@ -29,48 +32,165 @@
     <!--<img src="/images/frij.png" alt="">-->
     <div class="col-sm-6 col-sm-offset-3">
 
-        <h1><span class="fa fa-sign-in"></span> Signup</h1>
+        <h1><span class="fa fa-sign-in"></span></h1>
 
         <!-- show any messages that come back with authentication -->
         <% if (message !== null) { %>
         <div class="alert alert-danger"><%= message %></div>
         <% } %>
 
-        <pre>
-            {{hello}}
-        </pre>
-
-        <!-- LOGIN FORM -->
-        <form action="/signup" method="post" name="form" ><!--enctype="multipart/form-data"-->
-            <div class="form-group">
-                <label>Nickname</label>
-                <input type="text" class="form-control" name="nickname">
-            </div>
-            <div class="form-group">
-                <label>Email</label>
-                <input type="text" class="form-control" name="email">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" name="password">
-            </div>
-            <div class="form-group">
-                <label>Photo</label>
-                <input type="file" class="form-control" ngf-select name="file" ng-model="file"  ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+    
+        <form action="/signup" method="post" name="form" >
+            <div class='login'>
+  <h2>Register</h2>
+  <input name='nickname' placeholder='Username' type='text'>
+  <input id='pw' name='password' placeholder='Password' type='password'>
+  <input name='email' placeholder='E-Mail Address' type='text'>
+   <div class="form-group">
+                <input type="file" style="margin-top:15px;" ngf-select name="file" ng-model="file"  ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
             </div>
 
-            <button type="submit" class="btn btn-warning btn-lg" ng-click="submit()">Signup</button>
+  <button  type='submit' value='Register' class="animation" ng-click="submit()"> Sign Up</button>
+  <a class='forgot' href="/login">Already have an account?</a>
+</div>
         </form>
 
         <hr>
 
-
-
-        <p>Already have an account? <a href="/login">Login</a></p>
-        <p>Or go <a href="/">home</a>.</p>
-
     </div>
 
 </div>
+<style>
+    
+
+    * {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #2E3740;
+  color: #435160;
+  font-family: "Open Sans", sans-serif;
+}
+
+h2 {
+  color: #6D7781;
+  font-family: "Sofia", cursive;
+  font-size: 15px;
+  font-weight: bold;
+  font-size: 3.6em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+a {
+  color: #435160;
+  text-decoration: none;
+}
+
+.login {
+  width: 350px;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  margin-left: -175px;
+}
+
+input[type="text"], input[type="password"] {
+  width: 350px;
+  padding: 20px 0px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #435160;
+  outline: none;
+  color: #6D7781;
+  font-size: 16px;
+}
+input[type=checkbox] {
+  display: none;
+}
+
+label {
+  display: block;
+  position: absolute;
+  margin-right: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: transparent;
+  content: "";
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  border: 3px solid #435160;
+}
+
+#agree:checked ~ label[for=agree] {
+  background: #435160;
+}
+
+button {
+  background: #1FCE6D;
+  border: 0;
+  width: 350px;
+  height: 40px;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+button:hover {
+  background: #16aa56;
+  animation-name: shake;
+}
+
+.forgot {
+  margin-top: 30px;
+  display: block;
+  font-size: 11px;
+  text-align: center;
+  font-weight: bold;
+}
+.forgot:hover {
+  margin-top: 30px;
+  display: block;
+  font-size: 11px;
+  text-align: center;
+  font-weight: bold;
+  color: #6D7781;
+}
+
+.agree {
+  padding: 30px 0px;
+  font-size: 12px;
+  text-indent: 25px;
+  line-height: 15px;
+}
+
+::-webkit-input-placeholder {
+  color: #435160;
+  font-size: 12px;
+}
+
+.animation {
+  animation-fill-mode: both;
+  animation-duration: 1s;
+  width:;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
+  }
+}
+
+</style>
 </body>
 </html>
