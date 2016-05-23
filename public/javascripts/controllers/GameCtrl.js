@@ -1,289 +1,181 @@
-var app = angular.module('GameApp', []);
+var app = angular.module('GameApp', ['ui.bootstrap'])
+    /*.config(function($routProvider){
+        $routeProvider
+            .when('/new',{
+                templateURL:'winner_modal.ejs'
+            })
+    })*/
 
-app.controller('GameController', function ($scope) {
+app.controller('GameController',  function ($scope, $location, $uibModal) {
 
+    $scope.draw_id = null;
+    $scope.current_game = null;
 
-    $scope.canvas = document.getElementById("myCanvas");
-    $scope.ctx = $scope.canvas.getContext("2d");
-
-    $scope.canvas.width = 1400;
-    $scope.canvas.height = 700;
-
-    $scope.background = new Image();
-    $scope.ball = document.createElement('img');
-    $scope.ball.setAttribute('src', '../images/_ball.png');
-    $scope.ball.setAttribute('id', 'ball');
-    $scope.ball.style.top="390px";
-    $scope.ball.style.left="490px";
-    document.getElementById("snooker").appendChild($scope.ball);
-
-    $scope.cue = document.createElement('img');
-    $scope.cue.setAttribute('src', '../images/cue-0.png');
-    $scope.cue.setAttribute('id', 'cue');
-    $scope.cue.style.top="390px";
-    $scope.cue.style.left="490px";
-    $scope.cue.style.width="900px";
-    $scope.cue.style.height="20px";
-    $scope.cue.style.position ="absolute";
-
-    document.getElementById("snooker").appendChild($scope.cue);
-
-
-    $scope.background.src = "../images/playerTable.png";
-    /*$scope.ball.src = '../images/_ball.png';*/
-
-    $scope.background.style.position = "relative";
-    $scope.background.style.zIndex = 2;
-    $scope.ballHeigh = 40;
-    $scope.ballWidth = 40;
-
-    $scope.ballRadius = 10;
-    $scope.x = $scope.canvas.width*1/5;
-    $scope.y = $scope.canvas.height/2 - 18;
-
-    $scope.dx = 2;
-    $scope.dy = -2;
-
-
-    $scope.background.onload = function () {
-        $scope.ctx.drawImage($scope.background, 0, 0);
-    };
-    /*
-     $scope.ball.onload = function () {
-     $scope.ctx.drawImage($scope.ball, $scope.x, $scope.y, $scope.ballHeigh, $scope.ballWidth);
-     };
-     */
-    $scope.init = function () {
-
-
-        //window.requestAnimationFrame($scope.draw);
-    };
-
-    /*document.addEventListener("mousemove", $scope.mouseMoveHandler, false);
-
-     $scope.mouseMoveHandler = function (event) {
-     $scope.relativeX = event.clientX - $scope.canvas.offsetLeft;
-     if ($scope.relativeX > 0 && $scope.relativeX < $scope.canvas.width) {
-     $scope.paddleX = $scope.relativeX - $scope.paddleWidth / 2;
-     }
-     };*/
-
-    var drawBall = function () {
-        $scope.ctx.beginPath();
-        $scope.ctx.arc($scope.x, $scope.y, $scope.ballRadius, 0, Math.PI * 2);
-        $scope.ctx.fillStyle = "#0095DD";
-        $scope.ctx.fill();
-        $scope.ctx.closePath();
-    };
-    /*
-     $scope.drawCue = function() {
-     $scope.ctx.beginPath();
-     $scope.ctx.;
-     $scope.ctx.fillStyle = "#0095DD";
-     $scope.ctx.fill();
-     $scope.ctx.closePath();
-     }*/
-
-    /*$scope.drawPaddle = function(){
-     $scope.ctx.beginPath();
-     $scope.ctx.rect($scope.paddleX, $scope.canvas.height - $scope.paddleHeight, $scope.paddleWidth, $scope.paddleWidth);
-     $scope.ctx.fillStyle = "#0095DD";
-     $scope.ctx.fill();
-     $scope.ctx.closePath();
-     };*/
-
-    $scope.draw = function () {
-        $scope.ctx.clearRect(0, 0, $scope.canvas.width, $scope.canvas.height);
-        //$scope.drawBall();
-        //$scope.drawPaddle();
-        //window.requestAnimationFrame($scope.draw)
-    };
-
-    /*$scope.draw();*/
-    $scope.init();
-
-    $scope.canvas.onclick = function(e) {
-        console.log(e);
-    }
-
-
-
-
-    var canvas=$scope.canvas;
-    console.log(canvas.style);
-    function getCoords(elem) {
-
-        var box = elem.getBoundingClientRect();
-
-        var body = document.body;
-        var docEl = document.documentElement;
-
-        var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
-        var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
-
-        var clientTop = docEl.clientTop || body.clientTop || 0;
-        var clientLeft = docEl.clientLeft || body.clientLeft || 0;
-
-        var top = box.top + scrollTop - clientTop;
-        var left = box.left + scrollLeft - clientLeft;
-
-        return {
-            top: parseInt(top),
-            left: parseInt(left)
-        };
-    }
-
-
-    $scope.rotateCue = function(e) {
-        var canvasCoords = getCoords($scope.canvas);
-
-        var ballCoords = getCoords($scope.ball);
-
-        var x = e.pageX - canvasCoords.left;
-        var y = e.pageY - canvasCoords.top;
-        console.log('X: ', x, 'Y: ', y);
-
-
-        var ballX = ballCoords.left;
-        var ballY = ballCoords.top;
-        var alpha = Math.atan( (ballY - y)/(ballX - x) );
-
-        $scope.cue.style.transform = 'rotate(' + (-alpha*360) + 'deg)';
-
-        //console.log(ballX);
-        $scope.cue.style.left = (ballX-430) + 'px';
-        $scope.cue.style.top = ballY + 'px';
-        //console.log($scope.cue.style.left);
-        /*
-         console.log('ballCoords', {x: ballX, y: ballY});
-         console.log('x ang y', {x: x, y: y} );
-         console.log('cue coords', { x: $scope.cue.style.left, y: $scope.cue.style.top } );*/
-        /*var transform = 'rotate(75 deg)';
-         $scope.cue.style.webkitTransform = transform;
-         $scope.cue.style.mozTransform = transform;
-         $scope.cue.style.msTransform = transform;
-         $scope.cue.style.oTransform = transform;*/
-    }
-
-    var ball = $scope.ball;
-    var ballCoords = getCoords($scope.ball);
-    var ballX = ballCoords.left;
-    var ballY = ballCoords.top;
-    $scope.cue.style.left = (ballX-430) + 'px';
-    $scope.cue.style.top = (ballY) + 'px';
-
-    ball.onmousedown = function(e) { // 1. отследить нажатие
-        ball.style.position = 'absolute';
-        moveAt(e);
-        document.getElementById("snooker").appendChild(ball);
-        ball.style.zIndex = 1000;
-        function moveAt(e) {
-
-            if ((e.pageX - ball.offsetWidth / 2) > 387 && (e.pageX - ball.offsetWidth / 2) < 1599 && (e.pageY - ball.offsetHeight / 2) > 129 && (e.pageY - ball.offsetHeight / 2) < 647 ) {
-                ball.style.left = e.pageX - ball.offsetWidth / 2 + 'px';
-                ball.style.top = e.pageY - ball.offsetHeight / 2 + 'px';
-
-                //console.log('Canvas: ');
-                //console.log('X : ', , 'Y : ', );
-                //console.log('Ball: ');
-                //console.log('X : ', ball.style.left, 'Y : ', ball.style.top);
+    $scope.set_player_type = function (form, index) {
+        if (!$scope.current_game) {
+            return false;
+        }
+        $scope.type_rb = $('[name="' + form + '"]');
+        for (var i = 0; i < $scope.type_rb.length; ++i) {
+            if ($scope.type_rb[i].checked) {
+                $scope.current_game.set_player_type($scope.type_rb[i].value, index);
             }
         }
-
-        document.onmousemove = function(e) {
-            $scope.cue.style.display = "none";
-            moveAt(e);
-        }
-
-        ball.onmouseup = function() {
-            console.log('Ball onmouse up');
-            document.onmousemove = null;
-            ball.onmouseup = null;
-            $scope.cue.style.display = "block";
-
-
-            var ballCoords = getCoords($scope.ball);
-            var ballX = ballCoords.left;
-            var ballY = ballCoords.top;
-            $scope.cue.style.left = (ballX-450) + 'px';
-            $scope.cue.style.top = (ballY-20) + 'px';
-
-            document.onmousemove = $scope.rotateCue;
-        }
-    }
-
-    ball.ondragstart = function() {
-        return false;
-    }
-
-
-
-
-    document.onmousemove = $scope.rotateCue;
-
-
-    $scope.playerId = 0;
-
-    $scope.playerColor = function () {
-        return (!($scope.playerId % 2) ? "red" : "blue");
     };
 
-    $scope.roomId = function () {
-        return "room" + Math.floor($scope.playerId / 2);
+
+    $scope.init = function () {
+
+        $scope.canvas_name = "myCanvas";
+        $scope.table = null;
+
+        $scope.set_drawing_context = function () {
+            $scope.width = window.innerWidth - 16;
+            if ($scope.width < 300) {
+                $scope.width = 300;
+            }
+            $scope.height = $scope.width / 2;
+
+            $scope.canvas_html = "<canvas "
+                + " id=" + $scope.canvas_name
+                + " width=" + $scope.width
+                + " height=" + $scope.height
+                + ">Sorry, your browser doesn't appear to support the HTML-5 Canvas</canvas>";
+
+            $('#pool_table').html($scope.canvas_html);
+
+            $scope.canvas = document.getElementById($scope.canvas_name);
+            if (!$scope.canvas) {
+                return false;
+            }
+            $scope.ctx = $scope.canvas.getContext("2d");
+            if (!$scope.ctx) {
+                return false;
+            }
+
+            if (!$scope.table) {
+                $scope.table = new Table();
+                $scope.table.initialize(game);
+            }
+
+            $scope.ctx.translate($scope.width / 2, $scope.height / 2);
+            $scope.ctx.scale($scope.height * table_scale, $scope.height * table_scale);
+
+            $scope.table.ctx = $scope.ctx;
+
+            $scope.canvas_offset = new Vector(
+                $scope.canvas.offsetLeft + $scope.width / 2,
+                $scope.canvas.offsetTop + $scope.height / 2
+            );
+
+            $scope.mouse_vec = function (e) {
+                $scope.vec = new Vector(e.clientX + window.scrollX, e.clientY + window.scrollY);
+                $scope.vec.subtract($scope.canvas_offset);
+                $scope.vec.scale_down($scope.height * table_scale);
+                return $scope.vec;
+            };
+
+            $scope.mouse_down = function (e) {
+                e.preventDefault();
+                $scope.table.player().mouse_down($scope.mouse_vec(e));
+            };
+
+            $scope.mouse_up = function (e) {
+                e.preventDefault();
+                $scope.table.player().mouse_up($scope.mouse_vec(e));
+            };
+
+            $scope.mouse_move = function (e) {
+                e.preventDefault();
+                $scope.table.player().mouse_move($scope.mouse_vec(e));
+            };
+
+            $scope.canvas.addEventListener('touchstart', $scope.mouse_down, false);
+            $scope.canvas.addEventListener('touchend', $scope.mouse_up, false);
+            $scope.canvas.addEventListener('touchmove', $scope.mouse_move, false);
+            $scope.canvas.addEventListener('mousedown', $scope.mouse_down, false);
+            $scope.canvas.addEventListener('mouseup', $scope.mouse_up, false);
+            $scope.canvas.addEventListener('mousemove', $scope.mouse_move, false);
+        };
+
+        $scope.set_drawing_context();
+
+        if ($scope.table) {
+            window.onresize = $scope.set_drawing_context;
+        }
+
+
+        $scope.draw_fn = function () {
+            $scope.table.draw();
+            if ($scope.current_game != $scope.table.game) {
+                $scope.current_game = $scope.table.game;
+                $scope.set_player_type("player1_type", 0);
+                $scope.set_player_type("player2_type", 1);
+            }
+            if ($scope.table.is_stable() && $scope.table.update_id != null) {
+                clearInterval($scope.table.update_id);
+                $scope.table.update_id = null;
+                $scope.table.game.shot_complete();
+                $scope.table.player().begin_shot();
+            }
+        };
+
+        if ($scope.draw_id == null) {
+            $scope.draw_id = setInterval($scope.draw_fn, 50);
+        }
+
+    };
+
+
+    $scope.declareWinner = function () {
+        /*Game.incrementTarget();
+         Game.shufflePlayers();*/
+        //$location.path('/new');
+        $uibModal.open({
+
+
+            controller: function($scope){alert('lol')},
+            templateUrl: '/tables',
+            resolve: {
+                winner: function(){
+                    return $scope.player;
+                }
+            }
+        });
     };
 
 
     var socket = io.connect('/', {
-        //'reconnection delay': 1
         reconnect: false
     });
 
-    $scope.temp = "temp";
-
-    socket.playerColor = $scope.playerColor();
-    socket.roomId = $scope.roomId();
-
-
     $scope.player = {
-        nickname: $scope.nickname,
-        id: $scope.playerId,
-        color: socket.playerColor,
-        room: socket.roomId
+        nickname: "",
+        turn: "",
+        room: "",
+        photo: null
     };
 
-
-    $scope.uCount = 0;
-
-
-    class Snooker {
+    console.info("path %s", $location.absUrl().split('/').pop());
 
 
-        init() {
+    /*$.ajax({
+            url: $location.absUrl(),
+            type: 'GET',
+            //dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+            data: {param1: 'value1'}
+        })
+        .done(function(data) {
+            alert(data);
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });*/
 
-        }
-
-        startGame(gameId, turn) {
-
-        }
-
-        mask(state) {
-
-        }
-
-        move(id, turn, win) {
-
-        }
-
-        endGame(turn, win) {
-
-        }
-
-
-        constructor() {
-
-        }
-
-    }
 
 
     socket
@@ -296,41 +188,61 @@ app.controller('GameController', function ($scope) {
         .on('reconnecting', function () {
             console.log("Wait.You\'re reconnecting");
         })
-        .on('wait', function () {
-            $("body").append("<pre>Waiting for the opponent...</pre>");
-        })
-        .on('exit', function () {
-            Snooker.endGame(Snooker.turn, 'exit');
-        })
-        .on('leave', function (userName) {
-            alert(userName + " leave");
-        })
-        .on('userCount', function (data) {
-            $scope.uCount = data.userCount;
-            $scope.$apply();
-            console.log("count of users ", data.userCount);
+        .emit('joinGameRoom', {'roomName': $location.absUrl().split('/').pop()})
+        .on('lol', function (data) {
+            console.log(data);
         })
 
-        .on('ready', function (gameId, turn, opponent) {
-            console.log("player" + opponent + "connected" + (turn == 1 ? "Your xod" : "Opponent xod"));
-        })
+        /*.on('wait', function () {
+         $("body").append("<pre>Waiting for the opponent...</pre>");
+         console.log("Waiting for the opponent...")
+         })
+         .on('exit', function () {
+         Snooker.endGame(Snooker.turn, 'exit');
+         })*/
+        /*.on('leave', function (userName) {
+         alert(userName + " leave");
+         })*/
+        /*.on('userCount', function (data) {
+         $scope.uCount = data.userCount;
+         $scope.$apply();
+         console.log("count of users ", data.userCount);
+         })
+
+
+
+         .on('ready', function (gameId, turn, opponent) {
+         console.log("player" + opponent + "connected" + (turn == 1 ? "Your xod" : "Opponent xod"));
+         })*/
 
 
         .on('initPlayer', function (data) {
-            $scope.player.nickname = data.nickName;
-            $scope.player.id = data.playerId;
-            $scope.player.room = data.roomId;
-            $scope.$apply();
-            console.log($scope.player);
+            /*$scope.player.nickname = data.nickName;
+             $scope.player.turn = "F";
+             socket.on('roomKUI', function (data) {
+             $scope.player.room = $location.absUrl().split('/').pop();
+             })
+             $scope.$apply();
+             console.log($scope.player);
 
-            $("body").append($scope.player.nickname);
+             $("body").append($scope.player.nickname);*/
+            console.log(data.user)
+            $scope.player.nickname = data.user.profile.nickname;
+            $scope.player.turn = 'X';
+            $scope.player.room = $location.absUrl().split('/').pop();
+            $scope.player.photo = data.user.profile.photo.data;
+            $scope.$apply();
+            //$('div.info').append($scope.player.nickname);
+            //$('div.info span').append($scope.player.turn);
+            console.log('player ', $scope.player);
+
 
         })
-        .emit('initPlayer', $scope.player)
-        .emit('addPlayerIntoATable', $scope.player)
+        /*
+         .emit('initPlayer', $scope.player)
+
+         .emit('addPlayerIntoATable', $scope.player)*/
         .on('message', function (data) {
-            //if(socket.userCount)
-            //alert($scope.uCount);
             if ($scope.uCount == 1) {
                 $("body").append("<br/>" + data.message);
             } else {
@@ -351,9 +263,12 @@ app.controller('GameController', function ($scope) {
         /*.on('disconnect', function (socket) {
          //socket.broadcast.to(socket.roomId).emit('user disconnected');
          })*/
-
-        .on('disconnect', function () {
-            socket.emit('error');
+        .on('leave', function (opponentName) {
+            alert(opponentName + " has gone")
+        })
+        .on('disconnect', function (userName) {
+            //socket.emit('error');
+            alert('${userName} disconnect');
         })
         .on('error', function (reason) {
             if (reason == "handshake unauthorized") {
@@ -363,11 +278,6 @@ app.controller('GameController', function ($scope) {
                     socket.connect();
                 }, 500);
             }
-        })
+        });
+})
 
-
-    //socket.join(socket.roomId);
-
-    $scope.playerId++;
-    //})
-});

@@ -27,12 +27,20 @@ html {
 body {
     background: #E2E4E7;
     padding: 0;
-    text-align: center;
+    /*text-align: center;*/
     font-family: 'open sans';
     position: relative;
     margin: 0;
     height: 100%;
     -webkit-font-smoothing: antialiased;
+}
+.players{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start ;
+}
+.current-player{
+    margin-right:50%;
 }
 
 .wrapper {

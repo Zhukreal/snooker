@@ -30,9 +30,10 @@ module.exports = function (router, passport) {
 
     router.get('/game/:id', createRoom, /*require('../middleware/loadRoom'),*/ function (req, res, next) {
         if (req.user) {
-
-            //req.session.room = createRoom.
-            res.render('game');
+            res.render('game',{
+                currentRoomName: req.params.id,
+                playerPhoto : req.user.profile.photo.data
+            });
         } else {
             res.redirect('/');
         }
@@ -55,7 +56,7 @@ module.exports = function (router, passport) {
         if (req.user == null)
             nickname = null;
         else
-            nickname = req.user.local.nickname;
+            nickname = req.user.profile.nickname;
 
         //console.log(req.user.local.cash);
 
@@ -66,7 +67,7 @@ module.exports = function (router, passport) {
         res.render('tables', {
             userID: req.user,
             userName: nickname,
-            userPhoto: req.user.local.photo.data,
+            userPhoto: req.user.profile.photo.data,
             roomId: randomString(15)
         });
     });
@@ -86,8 +87,7 @@ module.exports = function (router, passport) {
 
     router.get('/profile/:id', isLoggedIn, function (req, res, next) {
         res.render('profile', {
-            user: req.user,
-            userPhoto: req.user.local.photo.data
+            user: req.user
         });
     });
 

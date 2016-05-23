@@ -40,14 +40,14 @@ module.exports = function (passport) {
                         var newUser = new User();
                         newUser.local.email = email;
                         newUser.local.password = newUser.generateHash(password);
-                        newUser.local.nickname = req.body.nickname;
-                        newUser.local.photo.data = req.body.file;
+                        newUser.profile.nickname = req.body.nickname;
+                        newUser.profile.photo.data = req.body.file;
 
                         newUser.save(function (err) {
                             if (err)
                                 throw err;
-                            req.session.user = user;
-                            req.cookies.user = user;
+                            req.session.user = newUser;
+                            req.cookies.user = newUser;
                             return done(null, newUser);
                         });
                     }

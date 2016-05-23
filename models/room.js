@@ -9,37 +9,26 @@ var roomSchema = new mongoose.Schema({
         default: 0
     },
     players: [/*user*/mongoose.Schema.Types.Mixed],
-    waitingPlayers : [mongoose.Schema.Types.Mixed],
     roomState: {
-        type: String,
-        enum: ["waiting", "ready", "playing", "finished"],
-        default: "waiting"
+        type: String/*,
+        enum: ["incomplete", "complete"]*/
     }
 });
 
-roomSchema.methods.wait = function () {
-    this.roomState = "waiting";
+roomSchema.method.incomplete = function () {
+    this.roomState = "incomplete";
 };
-roomSchema.methods.isWaiting = function () {
-    return (this.roomState == "waiting")
+
+roomSchema.method.isIncomplete = function () {
+    return (this.roomState == "incomplete");
 };
-roomSchema.methods.ready = function () {
-    this.roomState = "ready";
+
+roomSchema.method.complete = function () {
+    this.roomState = "complete";
 };
-roomSchema.methods.isReady = function () {
-    return (this.roomState == "ready")
-};
-roomSchema.methods.play = function () {
-    this.roomState = "playing";
-};
-roomSchema.methods.isPlaying = function () {
-    return (this.roomState == "playing")
-};
-roomSchema.methods.finish = function () {
-    this.roomState = "finished";
-};
-roomSchema.methods.isFinished = function () {
-    return (this.roomState == "finished")
+
+roomSchema.method.isComplete = function () {
+    return (this.roomState == "complete");
 };
 
 module.exports = mongoose.model('Room', roomSchema);

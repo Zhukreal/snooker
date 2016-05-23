@@ -4,23 +4,71 @@
     <title>PlayGame</title>
     <meta charset='utf-8'/>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/vendor/bower_components/angular/angular.min.js"></script>
+    <script src="/vendor/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="/vendor/bower_components/socket.io-client/socket.io.js"></script>
     <script src="/vendor/bower_components/jquery/jquery.min.js"></script>
+
+    <!--<script src="/javascripts/gameClasses/canvas_pool.js"></script>-->
+    <script src="/javascripts/gameClasses/Ball.js"></script>
+    <script src="/javascripts/gameClasses/Cushion.js"></script>
+    <script src="/javascripts/gameClasses/Game.js"></script>
+    <script src="/javascripts/gameClasses/Line.js"></script>
+    <script src="/javascripts/gameClasses/Player.js"></script>
+    <script src="/javascripts/gameClasses/Pocket.js"></script>
+    <script src="/javascripts/gameClasses/Polygon.js"></script>
+    <script src="/javascripts/gameClasses/Shot.js"></script>
+    <script src="/javascripts/gameClasses/Table.js"></script>
+    <script src="/javascripts/gameClasses/Vector.js"></script>
+
+
 </head>
-<body ng-app="GameApp" ng-controller="GameController">
+<body ng-app="GameApp" ng-controller="GameController" data-ng-init="init()">
+<!-- onload="init_pool_table( &quot;pool_table&quot;)" -->
 
-<pre>{{temp}}</pre>
-<pre>{{player.nickname}}</pre>
 
-<div class="table_sn" id="snooker" style="width:1400px; height:700px; display:block; margin: 0px auto;">
-    <canvas id="myCanvas"></canvas>
+<!--<input type="button" ng-click="declareWinner()">-->
+<div class="players">
+    <div class="current-player" ng-model="userCounter" ng-init="userCounter=true;">
+
+        <div class="nickname" ng-if="userCounter">
+            <pre>{{player.nickname}}</pre>
+        </div>
+        <div class="turn">
+            <pre>{{player.turn}}</pre>
+        </div>
+        <div class="photo">
+            <img src="/userPhotos/<%= playerPhoto %>" alt=""
+                 style="width: 30px;height: 30px;border-radius: 50%;margin-top: 8px;">
+        </div>
+    </div>
+    <div class="opponent">
+        <div class="nickname">
+            <pre>{{opponent.nickname}}ne danik</pre>
+        </div>
+        <div class="turn">
+            <pre>{{opponent.turn}}ne x</pre>
+        </div>
+    </div>
+</div>
+
+<div id="pool_table">
+
 </div>
 
 
+<div id="msg"></div>
+<div class="info">
+    <!--{{player}}-->
+    {{player.nickname}}
+    <span>{{player.turn}}</span>
+</div>
+
 </body>
 
-<script src="/vendor/bower_components/angular/angular.min.js"></script>
+
 <script src="/javascripts/appRoutes.js"></script>
 <script src="/vendor/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<!--<script src="/javascripts/controllers/WinnerModalCtrl.js"></script>-->
 <script src="/javascripts/controllers/GameCtrl.js"></script>
 </html>
