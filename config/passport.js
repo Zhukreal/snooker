@@ -42,7 +42,7 @@ module.exports = function (passport) {
                         newUser.local.password = newUser.generateHash(password);
                         newUser.profile.nickname = req.body.nickname;
                         newUser.profile.photo.data = req.body.file;
-
+                        newUser.profile.photo.link = req.body.file;
                         newUser.save(function (err) {
                             if (err)
                                 throw err;

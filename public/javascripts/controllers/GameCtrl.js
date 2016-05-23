@@ -159,23 +159,6 @@ app.controller('GameController',  function ($scope, $location, $uibModal) {
     console.info("path %s", $location.absUrl().split('/').pop());
 
 
-    /*$.ajax({
-            url: $location.absUrl(),
-            type: 'GET',
-            //dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
-            data: {param1: 'value1'}
-        })
-        .done(function(data) {
-            alert(data);
-            console.log("success");
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });*/
-
 
 
     socket
@@ -226,15 +209,37 @@ app.controller('GameController',  function ($scope, $location, $uibModal) {
              console.log($scope.player);
 
              $("body").append($scope.player.nickname);*/
-            console.log(data.user)
+            /*$scope.loadUser = function(){
+                this.directive('userInfo', function(){
+                    return {
+                        link: function($scope,element,attrs){
+                            element.html("<div>{{")
+                        }
+                    }
+                })
+            }*/
+
+            console.log(data.user);
             $scope.player.nickname = data.user.profile.nickname;
             $scope.player.turn = 'X';
             $scope.player.room = $location.absUrl().split('/').pop();
             $scope.player.photo = data.user.profile.photo.data;
+            console.log(data.user.profile.photo);
             $scope.$apply();
             //$('div.info').append($scope.player.nickname);
             //$('div.info span').append($scope.player.turn);
             console.log('player ', $scope.player);
+
+
+
+
+
+
+
+
+
+
+
 
 
         })
