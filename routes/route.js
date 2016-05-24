@@ -32,7 +32,7 @@ module.exports = function (router, passport) {
         if (req.user) {
             res.render('game',{
                 currentRoomName: req.params.id,
-                playerPhoto : req.user.profile.photo.data
+                playerPhoto : req.user.profile.photo.link
             });
         } else {
             res.redirect('/');
