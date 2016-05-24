@@ -1,20 +1,21 @@
 //import {Pocket} from 'Pocket.js';
 var white = "#ffffff";
-var red = "#ff0000";
+var red = "red";
+
 var yellow = "#ffff00";
-var green = "#00ff00";
+var green = "#009933";
 var black = "#000000";
 var gray = "#808080";
 var orange = "#EEAC41";
 var blue = "#0000ff";
 var cyan = "#00ffff";
-var _green = "#106E19";
+var _green = "#003300";
 
 var purple = "#ff00ff";
 var gold = "#ffff80";
 var orange = "#ffa000";
 var darkgreen = "#008000";
-var brown = "#808040";
+var brown = "#333300";
 
 var show_targetting_line = 1;
 var game = "8 Ball";
@@ -159,26 +160,26 @@ Table.prototype.commit_shot = function () {
 Table.prototype.draw = function () {
     var ctx = this.ctx;
 
-    ctx.fillStyle = white;
+    ctx.fillStyle = "#E2E4E7";
     ctx.beginPath();
     ctx.rect( -1.5, -1, 3, 2 );
     ctx.closePath();
     ctx.fill();
 
-    ctx.fillStyle = white;
+    ctx.fillStyle = "#E2E4E7";
     ctx.beginPath();
     ctx.rect( -1.2, -0.7, 2.4, 1.4 );
     ctx.closePath();
     ctx.fill();
 
     var outer = ball_scale * pocket_scale * Math.SQRT2;
-    ctx.fillStyle = green;
+    ctx.fillStyle = "#006633";
     ctx.beginPath();
     ctx.rect( -1-outer, -0.5-outer, 2+2*outer, 1+2*outer );
     ctx.closePath();
     ctx.fill();
 
-    ctx.strokeStyle = red;
+    ctx.strokeStyle = black;
     ctx.lineWidth = 0.005;
     ctx.beginPath();
     ctx.moveTo( 0.5, 0.5 );

@@ -22,7 +22,10 @@ class Ball {
 
     draw(ctx) {
         ctx.save();
-        ctx.fillStyle = this.color;
+        var grd=ctx.createRadialGradient(75,50,5,90,60,100);
+        grd.addColorStop(1,this.color);
+        grd.addColorStop(0,"black");
+        ctx.fillStyle = grd;
         ctx.beginPath();
         ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, true);
         ctx.closePath();

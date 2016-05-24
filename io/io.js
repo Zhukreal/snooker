@@ -186,11 +186,26 @@ module.exports = function (server) {
             socket.roomName = data.roomName;
             socket.join(data.roomName);
             io.sockets['in'](data.roomName).emit('lol', {
-                'text': 'Player ' + socket.client.request.user.profile.nickname + ' has joined into the game'
+                'currentPlayer': socket.client.request.user
             });
         });
         socket.on('disconnect', function () {
             io.sockets['in'](socket.roomName).emit('leave', socket.client.request.user.profile.nickname);
+            /*console.log('socket.rN',socket.nsp.name)
+            Room.find({name: socket.roomName}, function (err, room) {
+                if (err) {
+                    throw err;
+                } else {
+                    console.log('lolita', room);
+                    room.players.pop(socket.client.request.user._id);
+                    room.playerCount--;
+                    room.save(function (err) {
+                        if (err) {
+                            throw err;
+                        }
+                    })
+                }
+            })*/
         });
         socket.emit('initPlayer', {'user': socket.client.request.user})
     });

@@ -159,6 +159,7 @@ Game_8ball.prototype = new Game();
 
 Game_8ball.prototype.create_balls = function (radius) {
     this.create_ball(-3, 0, red, "red");
+    this.create_ball.style="white";
 
     this.create_ball(-2, 1, red, "red");
     this.create_ball(-2, -1, red, "red");
