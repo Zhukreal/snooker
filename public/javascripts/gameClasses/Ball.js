@@ -22,7 +22,7 @@ class Ball {
 
     draw(ctx) {
         ctx.save();
-        var grd=ctx.createRadialGradient(75,50,5,90,60,100);
+        var grd=ctx.createRadialGradient(20,50,5,90,60,100);
         grd.addColorStop(1,this.color);
         grd.addColorStop(0,"black");
         ctx.fillStyle = grd;

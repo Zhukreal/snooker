@@ -19,10 +19,10 @@ body {
     background-repeat: no-repeat;
 }
 .page2 {
-    background: url(../images/billiard-foto.jpg);
+    background: url(../images/lol.jpg);
 }
 .page3 {
-    background: #FFE4E1;
+    background: #CCFFCC ;
 }
 .onepage-pagination li a.active:before {
     border-color: #fff;
@@ -163,7 +163,7 @@ body {
 }
 #lol1 {
     margin-left: 70%;
-    margin-top: 25%;
+    margin-top: 30%;
     border: 5px solid white;
 }
 #lol2 {

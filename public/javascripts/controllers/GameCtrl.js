@@ -1,6 +1,12 @@
 var app = angular.module('GameApp', ['ui.bootstrap'])
+    /*.config(function($routProvider){
+        $routeProvider
+            .when('/new',{
+                templateURL:'winner_modal.ejs'
+            })
+    })*/
 
-app.controller('GameController', function ($scope, $location, $uibModal) {
+app.controller('GameController',  function ($scope, $location, $uibModal) {
 
     $scope.draw_id = null;
     $scope.current_game = null;
@@ -128,12 +134,10 @@ app.controller('GameController', function ($scope, $location, $uibModal) {
         $uibModal.open({
 
 
-            controller: function ($scope) {
-                alert('lol')
-            },
+            controller: function($scope){alert('lol')},
             templateUrl: '/tables',
             resolve: {
-                winner: function () {
+                winner: function(){
                     return $scope.player;
                 }
             }
@@ -155,6 +159,8 @@ app.controller('GameController', function ($scope, $location, $uibModal) {
     console.info("path %s", $location.absUrl().split('/').pop());
 
 
+
+
     socket
         .on('connect', function () {
             console.log("You\'ve been connected successfully");
@@ -167,33 +173,75 @@ app.controller('GameController', function ($scope, $location, $uibModal) {
         })
         .emit('joinGameRoom', {'roomName': $location.absUrl().split('/').pop()})
         .on('lol', function (data) {
-            console.log("Player %s has joined into the game", data.currentPlayer.profile.nickname);
-            $('div.players')
-                .append("<div class='current-player'>" + "<div class='nickname'><pre>" + data.currentPlayer.profile.nickname + "</pre></div>" +
-                    "<div class='turn'><pre>" + $scope.player.turn + "</pre></div>" +
-                    "<div class='photo'>" +
-                    "<img src = '../userPhotos/" + data.currentPlayer.profile.photo.link + "\' style = ' width: 30px;height: 30px;border-radius: 50%;margin-top: 8px;' > "
-                );
-
-            //$scope.$apply();
-
+            console.log(data);
         })
+
+        /*.on('wait', function () {
+         $("body").append("<pre>Waiting for the opponent...</pre>");
+         console.log("Waiting for the opponent...")
+         })
+         .on('exit', function () {
+         Snooker.endGame(Snooker.turn, 'exit');
+         })*/
+        /*.on('leave', function (userName) {
+         alert(userName + " leave");
+         })*/
+        /*.on('userCount', function (data) {
+         $scope.uCount = data.userCount;
+         $scope.$apply();
+         console.log("count of users ", data.userCount);
+         })
+         .on('ready', function (gameId, turn, opponent) {
+         console.log("player" + opponent + "connected" + (turn == 1 ? "Your xod" : "Opponent xod"));
+         })*/
 
 
         .on('initPlayer', function (data) {
+            /*$scope.player.nickname = data.nickName;
+             $scope.player.turn = "F";
+             socket.on('roomKUI', function (data) {
+             $scope.player.room = $location.absUrl().split('/').pop();
+             })
+             $scope.$apply();
+             console.log($scope.player);
+             $("body").append($scope.player.nickname);*/
+            /*$scope.loadUser = function(){
+                this.directive('userInfo', function(){
+                    return {
+                        link: function($scope,element,attrs){
+                            element.html("<div>{{")
+                        }
+                    }
+                })
+            }*/
 
             console.log(data.user);
             $scope.player.nickname = data.user.profile.nickname;
             $scope.player.turn = 'X';
             $scope.player.room = $location.absUrl().split('/').pop();
-            $scope.player.photo = data.user.profile.photo.link;
-
+            $scope.player.photo = data.user.profile.photo.data;
+            console.log(data.user.profile.photo);
             $scope.$apply();
-
+            //$('div.info').append($scope.player.nickname);
+            //$('div.info span').append($scope.player.turn);
             console.log('player ', $scope.player);
 
 
+
+
+
+
+
+
+
+
+
+
+
         })
+        /*
+         .emit('initPlayer', $scope.player)
+         .emit('addPlayerIntoATable', $scope.player)*/
         .on('message', function (data) {
             if ($scope.uCount == 1) {
                 $("body").append("<br/>" + data.message);
@@ -220,7 +268,7 @@ app.controller('GameController', function ($scope, $location, $uibModal) {
         })
         .on('disconnect', function (userName) {
             //socket.emit('error');
-            alert('%s disconnect',userName);
+            alert('${userName} disconnect');
         })
         .on('error', function (reason) {
             if (reason == "handshake unauthorized") {
